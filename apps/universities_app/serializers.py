@@ -1,4 +1,5 @@
 from django.db.models.functions import Coalesce
+from django.conf import settings
 from django.db.models import F
 from rest_framework import serializers
 from .models import Universities, Country
@@ -7,7 +8,7 @@ from .models import Universities, Country
 # UNIVERSITIES
 class UniversitiesSerializer(serializers.ModelSerializer):
     country = serializers.CharField(source="country.name_en")
-    year_of_study = serializers.SerializerMethodField()
+    university_img = serializers.SerializerMethodField()
 
     class Meta:
         model = Universities
@@ -19,11 +20,15 @@ class UniversitiesSerializer(serializers.ModelSerializer):
             "university_img",
         )
 
-    def get_year_of_study(self, obj):
-        try:
-            return f"{obj.year_of_study} years"
-        except ValueError:
-            return obj.year_of_study
+    def get_university_img(self, obj):
+        request = self.context.get("request")
+        if obj.university_img:
+            return (
+                request.build_absolute_uri(obj.university_img.url)
+                if request
+                else settings.MEDIA_URL + obj.university_img.url
+            )
+        return None
 
 
 class UniversitiesDetailSerializer(serializers.ModelSerializer):
@@ -86,6 +91,7 @@ class CountryDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Country
         fields = (
+            "id",
             "name_ru",
             "country_img",
             "about_universities",
@@ -99,4 +105,6 @@ class CountryDetailSerializer(serializers.ModelSerializer):
             ranking_the=Coalesce(F("rating_the"), 9999),
         ).order_by("rating_qs", "rating_the")[:4]
 
-        return UniversitiesSerializer(top_universities, many=True).data
+        return UniversitiesSerializer(
+            top_universities, many=True, context=self.context
+        ).data

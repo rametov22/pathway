@@ -1,5 +1,5 @@
 from django.contrib import admin
-
+from django.contrib.auth.admin import UserAdmin
 from .models import *
 
 
@@ -9,19 +9,166 @@ class UserAdmin(admin.ModelAdmin):
         "email",
         "id",
         "is_active",
+        "is_superuser",
+        "is_staff",
     )
     search_fields = ("email",)
     list_filter = (
         "gender",
-        "country",
         "is_active",
+        "is_superuser",
+        "is_staff",
     )
-    filter_horizontal = ("interests",)
+    ordering = (
+        "-is_superuser",
+        "-is_active",
+        "-date_joined",
+    )
+    fieldsets = (
+        (None, {"fields": ("email", "password")}),
+        ("Permissions", {"fields": ("is_staff", "is_active", "is_superuser")}),
+        (
+            "Personal Info",
+            {
+                "fields": (
+                    "phone_number",
+                    "gender",
+                    "birth_date",
+                    "country",
+                    "profile_picture",
+                )
+            },
+        ),
+        (
+            "Additional Info",
+            {
+                "fields": (
+                    "verification_code",
+                    "google_photo_url",
+                )
+            },
+        ),
+        ("Important dates", {"fields": ("last_login", "date_joined")}),
+    )
+    add_fieldsets = (
+        (
+            None,
+            {
+                "classes": ("wide",),
+                "fields": ("email", "password1", "password2", "is_staff", "is_active"),
+            },
+        ),
+    )
 
 
-@admin.register(Interest)
-class InterestAdmin(admin.ModelAdmin):
+# class CustomUserAdmin(UserAdmin):
+#     model = User
+#     list_display = ("email", "is_staff", "is_superuser")
+#     ordering = ("email",)
+#     fieldsets = (
+#         (None, {"fields": ("email", "password")}),
+#         ("Permissions", {"fields": ("is_staff", "is_active", "is_superuser")}),
+#         (
+#             "Personal Info",
+#             {"fields": ("phone_number", "gender", "birth_date", "country")},
+#         ),
+#         ("Important dates", {"fields": ("last_login", "date_joined")}),
+#     )
+#     add_fieldsets = (
+#         (
+#             None,
+#             {
+#                 "classes": ("wide",),
+#                 "fields": ("email", "password1", "password2", "is_staff", "is_active"),
+#             },
+#         ),
+#     )
+#     search_fields = ("email",)
+#     ordering = ("email",)
+
+
+# admin.site.register(User, CustomUserAdmin)
+
+
+@admin.register(Question)
+class QuestionAdmin(admin.ModelAdmin):
     list_display = (
-        "name",
+        "text",
         "id",
     )
+
+
+@admin.register(Answer)
+class AnswerAdmin(admin.ModelAdmin):
+    list_display = (
+        "question",
+        "text",
+        "id",
+    )
+
+
+@admin.register(UserAnswer)
+class UserAnswerAdmin(admin.ModelAdmin):
+    list_display = (
+        "user",
+        "question",
+    )
+    filter_horizontal = ("answers",)
+    search_fields = ("user",)
+    list_filter = ("question",)
+
+
+@admin.register(DefaultApplication)
+class DefaultApplicationAdmin(admin.ModelAdmin):
+    list_display = (
+        "title",
+        "is_active",
+        "created_at",
+    )
+    list_filter = ("is_active",)
+    readonly_fields = ("created_at",)
+
+
+@admin.register(UserApplication)
+class UserApplicationAdmin(admin.ModelAdmin):
+    list_display = (
+        "user",
+        "default_application",
+        "status",
+    )
+    list_filter = (
+        "status",
+        "default_application",
+    )
+    search_fields = ("user__email",)
+    readonly_fields = (
+        "created_at",
+        "updated_at",
+    )
+
+
+@admin.register(ApplicationDocument)
+class ApplicationDocumentAdmin(admin.ModelAdmin):
+    list_display = (
+        "user",
+        "id",
+        "title",
+        "application__default_application",
+        "uploaded_at",
+    )
+    readonly_fields = ("uploaded_at",)
+    list_filter = ("application__default_application",)
+    search_fields = ("user__email",)
+
+
+@admin.register(UserDocument)
+class UserDocumentAdmin(admin.ModelAdmin):
+    list_display = (
+        "user",
+        "id",
+        "title",
+        "uploaded_at",
+    )
+    readonly_fields = ("uploaded_at",)
+    list_filter = ("uploaded_at",)
+    search_fields = ("user__email",)

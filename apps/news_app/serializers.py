@@ -1,10 +1,9 @@
 from rest_framework import serializers
-from .models import News
+from .models import News, Notification, UserNotification, UserNotificationReadStatus
 
 
 class NewsSerializer(serializers.ModelSerializer):
     category = serializers.SerializerMethodField()
-    date_added = serializers.DateField(format=("%d-%m-%Y"))
 
     class Meta:
         model = News
@@ -23,7 +22,6 @@ class NewsSerializer(serializers.ModelSerializer):
 
 class NewsDetailSerializer(serializers.ModelSerializer):
     category = serializers.SerializerMethodField()
-    date_added = serializers.DateField(format=("%d-%m-%Y"))
 
     class Meta:
         model = News
@@ -38,3 +36,37 @@ class NewsDetailSerializer(serializers.ModelSerializer):
 
     def get_category(self, obj):
         return obj.category.category
+
+
+class NotificationSerializer(serializers.ModelSerializer):
+    id_news = serializers.IntegerField(source="news.id")
+    title = serializers.CharField(source="news.news_title")
+    category = serializers.CharField(source="news.category.category")
+    image = serializers.ImageField(source="news.news_img")
+    date = serializers.DateTimeField(source="news.date_added")
+    is_read = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Notification
+        fields = ["id", "id_news", "title", "image", "category", "date", "is_read"]
+
+    def get_is_read(self, obj):
+        request = self.context.get("request")
+        if request and request.user.is_authenticated:
+            return UserNotificationReadStatus.objects.filter(
+                user=request.user, notification=obj, is_read=True
+            ).exists()
+
+
+class UserNotificationSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = UserNotification
+        fields = ["id", "title", "created_at", "is_read"]
+
+
+class UserNotificationDetailSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = UserNotification
+        fields = ["id", "title", "body", "created_at"]

@@ -5,6 +5,7 @@ from .views import (
     CountryDetailView,
     CountryHomeView,
     CountryListView,
+    StaticFilter,
     UniversitiesDetailView,
     UniversitiesHomeView,
     UniversitiesListView,
@@ -26,6 +27,7 @@ urlpatterns = [
     path(
         "detail_country/<int:id>/", CountryDetailView.as_view(), name="detail_countries"
     ),
+    path("static-filters/", StaticFilter.as_view(), name="static-filters"),
 ]
 
 urlpatterns += router.urls

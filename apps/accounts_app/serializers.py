@@ -1,17 +1,28 @@
-from os import name
+import os
+import random
+from django.core.mail import send_mail
 from django.contrib.auth import authenticate
 from django.contrib.auth.hashers import check_password
+from django.forms import CharField
+from django_countries.serializers import CountryFieldMixin
 from django.contrib.auth.hashers import make_password
 from rest_framework import serializers
 from rest_framework_simplejwt.tokens import RefreshToken
+from phonenumber_field.serializerfields import PhoneNumberField
 
-from .models import Interest, User
+from .models import (
+    Answer,
+    ApplicationDocument,
+    Question,
+    User,
+    UserAnswer,
+    UserApplication,
+    UserDocument,
+)
+from .validators.file_size import validate_file_size
 
 
-class UserRegistrationSerializer(serializers.ModelSerializer):
-
-    interests = serializers.ListField(child=serializers.IntegerField(), required=True)
-    user_type = serializers.CharField(required=True)
+class RegisterStep1Serializer(serializers.ModelSerializer):
     password = serializers.CharField(
         write_only=True,
         required=True,
@@ -19,89 +30,171 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         style={"input_type": "password"},
         error_messages={"min_length": "Password must be at least 8 characters long."},
     )
+    confirm_password = serializers.CharField(write_only=True, min_length=8)
 
     class Meta:
         model = User
-        fields = ["email", "password", "user_type", "interests"]
+        fields = ["email", "password", "confirm_password"]
 
-    def validate(self, value):
-        if User.objects.filter(email=value).exists():
-            raise serializers.ValidationError("User with this email already exists")
-        return value
+    def validate(self, data):
+        if data["password"] != data["confirm_password"]:
+            raise serializers.ValidationError(
+                {"confirm_password": "Пароли на совпадают."}
+            )
+        if User.objects.filter(email=data["email"]).exists():
+            raise serializers.ValidationError(
+                {"email": "Пользователь с таким email уже существует."}
+            )
+        return data
 
     def create(self, validated_data):
-        interests_data = validated_data.pop("interests", [])
+        validated_data.pop("confirm_password")
 
+        # verification_code = str(random.randint(100000, 999999))
         user = User.objects.create(
             email=validated_data["email"],
             password=make_password(validated_data["password"]),
-            user_type=validated_data["user_type"],
             is_active=False,
+            verification_code="123456",
         )
 
-        user.interests.set(interests_data)
+        # send_mail(
+        #     subject="Восстановление пароля",
+        #     message=f"Ваш код для восстановления пароля: {verification_code}",
+        #     from_email=None,
+        #     recipient_list=[user.email],
+        #     fail_silently=False,
+        # )
+        return user
 
-        return {"user_id": user.id}
+
+class VerifyCodeSerializer(serializers.Serializer):
+    user_id = serializers.IntegerField()
+    code = serializers.CharField(max_length=6)
+
+    def validate(self, data):
+        user = User.objects.filter(id=data["user_id"]).first()
+        if not user:
+            raise serializers.ValidationError({"user_id": "Пользователь не найден."})
+        if user.verification_code != data["code"]:
+            raise serializers.ValidationError({"code": "Неверный код."})
+        return data
+
+    def save(self):
+        user = User.objects.get(id=self.validated_data["user_id"])
+        user.verification_code = None
+        user.save()
+        return {"message": "Код подтвержден.", "user_id": user.id}
 
 
-class CompleteRegistrationSerializer(serializers.ModelSerializer):
-    name = serializers.CharField(required=True)
-    gender = serializers.ChoiceField(
-        choices=[("Male", "Мужской"), ("Female", "Женский")], required=True
-    )
+class CompleteProfileSerializer(serializers.ModelSerializer):
+    GENDER_CHOICES = [("Male", "Мужской"), ("Female", "Женский")]
+
+    name = serializers.CharField(required=True, write_only=True)
+    gender = serializers.ChoiceField(choices=GENDER_CHOICES, required=True)
     birth_date = serializers.DateField(required=True)
 
     class Meta:
         model = User
-        fields = ["name", "gender", "birth_date"]
+        fields = ["first_name", "last_name", "name", "gender", "birth_date"]
+        read_only_fields = ["first_name", "last_name"]
+
+    def validate(self, data):
+        if not data.get("name"):
+            raise serializers.ValidationError({"name": "Это поле обязательно."})
+        if not data.get("gender"):
+            raise serializers.ValidationError({"gender": "Это поле обязательно."})
+        if not data.get("birth_date"):
+            raise serializers.ValidationError({"birth_date": "Это поле обязательно."})
+        return data
 
     def update(self, instance, validated_data):
-        missing_fields = []
-        if "name" not in validated_data:
-            missing_fields.append("name")
-        if "gender" not in validated_data:
-            missing_fields.append("gender")
-        if "birth_date" not in validated_data:
-            missing_fields.append("birth_date")
+        name = validated_data.pop("name", None)
+        if name:
+            name_parts = name.strip().split(maxsplit=1)
+            instance.first_name = name_parts[0] if name_parts else ""
+            instance.last_name = name_parts[1] if len(name_parts) > 1 else ""
 
-        if missing_fields:
-            raise serializers.ValidationError(
-                {field: ["Это поле обязательно."] for field in missing_fields}
-            )
-
-        full_name = validated_data.get("name", "").strip()
-        name_parts = full_name.split(maxsplit=1)
-        instance.first_name = name_parts[0] if name_parts else ""
-        instance.last_name = name_parts[1] if len(name_parts) > 1 else ""
         instance.gender = validated_data.get("gender", instance.gender)
         instance.birth_date = validated_data.get("birth_date", instance.birth_date)
-        instance.is_active = True
         instance.save()
-
-        refresh = RefreshToken.for_user(instance)
-        tokens = {
-            "access": str(refresh.access_token),
-            "refresh": str(refresh),
-        }
-
-        return instance, tokens
+        return instance
 
 
-class RegistrationOptionsSerializer(serializers.Serializer):
-    user_types = serializers.SerializerMethodField()
-    interests = serializers.SerializerMethodField()
+class QuestionSerializer(serializers.ModelSerializer):
+    answers = serializers.SerializerMethodField()
 
-    def get_user_types(self, obj):
+    class Meta:
+        model = Question
+        fields = ["id", "text", "is_multiple_answer", "answers"]
+
+    def get_answers(self, obj):
         return [
-            {"value": choice[0], "label": choice[1]}
-            for choice in User._meta.get_field("user_type").choices
+            {
+                "id": answer.id,
+                "text": answer.text,
+            }
+            for answer in obj.answers.all()
         ]
 
-    def get_interests(self, obj):
-        return [
-            {"id": interest.id, "name": interest.name}
-            for interest in Interest.objects.all()
-        ]
+
+class UserAnswerSerializer(serializers.Serializer):
+    user_id = serializers.IntegerField()
+    answers = serializers.DictField(
+        child=serializers.ListField(
+            child=serializers.IntegerField(), required=True, allow_empty=False
+        ),
+        required=True,
+    )
+
+    def validate(self, data):
+        user_id = data["user_id"]
+        answers = data["answers"]
+
+        user = User.objects.filter(id=user_id).first()
+        if not user:
+            raise serializers.ValidationError({"user_id": "Пользователь не найден"})
+
+        for question_id, answer_ids in answers.items():
+            question = Question.objects.filter(id=question_id).first()
+            if not question:
+                raise serializers.ValidationError(
+                    {f"question_{question_id}": "Такого вопроса не существует"}
+                )
+
+            for answer_id in answer_ids:
+                answer = Answer.objects.filter(id=answer_id, question=question).first()
+                if not answer:
+                    raise serializers.ValidationError(
+                        {
+                            f"answer_{answer_id}": f"Ответ {answer_id} не принадлежит вопросу {question_id}"
+                        }
+                    )
+        return data
+
+    def save(self):
+        user = User.objects.get(id=self.validated_data["user_id"])
+        answers = self.validated_data["answers"]
+
+        for question_id, answer_ids in answers.items():
+            question = Question.objects.get(id=question_id)
+            user_answer, created = UserAnswer.objects.get_or_create(
+                user=user, question=question
+            )
+            user_answer.answers.set(Answer.objects.filter(id__in=answer_ids))
+
+        if UserAnswer.objects.filter(user=user).count() == Question.objects.count():
+            user.is_active = True
+            user.save()
+
+            refresh = RefreshToken.for_user(user)
+            return {
+                "message": "Регистрация заверщена.",
+                "access_token": str(refresh.access_token),
+                "refresh": str(refresh),
+            }
+
+        return {"message": "Ответы сохранены."}
 
 
 class LoginSerializer(serializers.Serializer):
@@ -141,6 +234,86 @@ class LoginSerializer(serializers.Serializer):
         }
 
 
+class ForgotPasswordSerializer(serializers.Serializer):
+    email = serializers.EmailField(required=True)
+
+    def validate(self, data):
+        email = data["email"]
+        user = User.objects.filter(email=email).first()
+        if not user:
+            raise serializers.ValidationError(
+                {"email": "Пользователь с таким email не найден."}
+            )
+        return data
+
+    def save(self):
+        user = User.objects.get(email=self.validated_data["email"])
+        # verification_code = str(random.randint(100000, 999999))
+        # user.verification_code = verification_code
+        user.verification_code = "123456"
+        user.save()
+
+        # send_mail(
+        #     subject="Восстановление пароля",
+        #     message=f"Ваш код для восстановления пароля: {verification_code}",
+        #     from_email=None,
+        #     recipient_list=[user.email],
+        #     fail_silently=False,
+        # )
+
+        return {
+            "message": "Код востановления отправлен на почту.",
+            "email": user.email,
+        }
+
+
+class VerifyResetCodeSerializer(serializers.Serializer):
+    email = serializers.EmailField(required=True)
+    code = serializers.CharField(max_length=6, required=True)
+
+    def validate(self, data):
+        email = data["email"]
+        code = data["code"]
+        user = User.objects.filter(email=email).first()
+
+        if not user:
+            raise serializers.ValidationError({"email": "Пользователь не найден"})
+        if user.verification_code != code:
+            raise serializers.ValidationError({"code": "Код не совпадает"})
+        return data
+
+    def save(self):
+        user = User.objects.get(email=self.validated_data["email"])
+        user.verification_code = None
+        user.save()
+        return {
+            "message": "Код подтвержден, установите новый пароль.",
+            "email": user.email,
+        }
+
+
+class ResetPasswordSerializer(serializers.Serializer):
+    email = serializers.EmailField(required=True)
+    password = serializers.CharField(write_only=True, min_length=8, required=True)
+    confirm_password = serializers.CharField(
+        write_only=True, min_length=8, required=True
+    )
+
+    def validate(self, data):
+        if data["password"] != data["confirm_password"]:
+            raise serializers.ValidationError(
+                {"confirm_password": "Пароли не совпадают."}
+            )
+        return data
+
+    def save(self):
+        user = User.objects.get(email=self.validated_data["email"])
+        user.password = make_password(self.validated_data["password"])
+        user.save()
+        return {"message": "Пароль успешно изменен. Теперь вы можете войти в аккаунт."}
+
+
+# PROFILE
 class ProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -153,9 +326,14 @@ class ProfileSerializer(serializers.ModelSerializer):
         )
 
 
-class ProfileUpdateSerializer(serializers.ModelSerializer):
+class ProfileUpdateSerializer(CountryFieldMixin, serializers.ModelSerializer):
     name = serializers.CharField(required=False)
     profile_picture = serializers.ImageField(required=False, allow_null=True)
+    phone_number = PhoneNumberField(required=False, max_length=20)
+    # country_code = serializers.CharField(
+    #     required=False, allow_blank=True, max_length=10
+    # )
+    # country = serializers.CharField(required=False, allow_blank=True, max_length=10)
 
     class Meta:
         model = User
@@ -193,3 +371,139 @@ class ProfileUpdateSerializer(serializers.ModelSerializer):
 
         instance.save()
         return instance
+
+
+class ProfileDocumentSerializer(serializers.Serializer):
+    id = serializers.IntegerField()
+    title = serializers.CharField()
+    file = serializers.FileField()
+    size = serializers.SerializerMethodField()
+    format = serializers.SerializerMethodField()
+
+    def get_size(self, obj):
+        if obj.file:
+            size_in_bytes = obj.file.size
+            if size_in_bytes < 1024:
+                return f"{size_in_bytes} B"
+            elif size_in_bytes < 1024 * 1024:
+                return f"{size_in_bytes / 1024:.0f} KB"
+            else:
+                return f"{size_in_bytes / (1024 * 1024):.0f} MB"
+        return None
+
+    def get_format(self, obj):
+        if obj.file:
+            return obj.file.name.split(".")[-1]
+        return None
+
+    class Meta:
+        fields = ["id", "title", "file", "size", "format"]
+
+
+# DOCUMENTS
+class ApplicationDocumentSerializer(serializers.ModelSerializer):
+    file = serializers.SerializerMethodField()
+    size = serializers.SerializerMethodField()
+    format = serializers.SerializerMethodField()
+
+    class Meta:
+        model = ApplicationDocument
+        fields = ["title", "file", "size", "format"]
+
+    def get_file(self, obj):
+        request = self.context.get("request")
+        if request:
+            return request.build_absolute_uri(obj.file.url)
+        return obj.file.url
+
+    def get_size(self, obj):
+        if obj.file:
+            size_in_bytes = obj.file.size
+            if size_in_bytes < 1024:
+                return f"{size_in_bytes} B"
+            elif size_in_bytes < 1024 * 1024:
+                return f"{size_in_bytes / 1024:.0f} KB"
+            else:
+                return f"{size_in_bytes / (1024 * 1024):.0f} MB"
+        return None
+
+    def get_format(self, obj):
+        if obj.file:
+            return obj.file.name.split(".")[-1]
+        return None
+
+
+class UserApplicationSerializer(serializers.ModelSerializer):
+    default_application_title = serializers.CharField(
+        source="default_application.title"
+    )
+    documents = ApplicationDocumentSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = UserApplication
+        fields = [
+            "id",
+            "default_application_title",
+            "status",
+            "deadline_date",
+            "documents",
+        ]
+
+
+class ApplicationDocumentUploadSerializer(serializers.ModelSerializer):
+    application_id = serializers.IntegerField(write_only=True)
+    title = serializers.CharField(required=False, allow_blank=True)
+    file = serializers.FileField(validators=[validate_file_size])
+
+    class Meta:
+        model = ApplicationDocument
+        fields = ["id", "title", "file", "uploaded_at", "application_id"]
+        read_only_fields = ["uploaded_at"]
+
+    def create(self, validated_data):
+        application_id = validated_data.pop("application_id")
+        application = UserApplication.objects.get(id=application_id)
+
+        if application.status in ["in_progress", "approved"]:
+            raise serializers.ValidationError(
+                f"Нельзя загружать файлы для этой заявки. вы уже загрузили, status: {application.status}"
+            )
+
+        application.status = "in_progress"
+        application.save()
+
+        file = validated_data.get("file")
+        filename_without_extension = (
+            os.path.splitext(file.name)[0] if file else "Untitled"
+        )
+
+        document = ApplicationDocument.objects.create(
+            application=application, title=filename_without_extension, **validated_data
+        )
+        return document
+
+
+class UserDocumentUploadSerializer(serializers.ModelSerializer):
+    title = serializers.CharField(required=False, allow_blank=True)
+    uploaded_at = serializers.DateTimeField(read_only=True)
+    file = serializers.FileField(validators=[validate_file_size])
+
+    class Meta:
+        model = UserDocument
+        fields = ["id", "title", "file", "uploaded_at"]
+
+    def create(self, validated_data):
+        file = validated_data.get("file")
+        filename_without_extension = (
+            os.path.splitext(file.name)[0] if file else "Untitled"
+        )
+
+        document = UserDocument.objects.create(
+            title=filename_without_extension, **validated_data
+        )
+        return document
+
+
+class CountrySerializerAccounts(serializers.Serializer):
+    code = serializers.CharField()
+    name = serializers.CharField()

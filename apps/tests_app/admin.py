@@ -3,6 +3,14 @@ from django.contrib import admin
 from .models import *
 
 
+@admin.register(TestStart)
+class TestStart(admin.ModelAdmin):
+    list_display = (
+        "title",
+        "id",
+    )
+
+
 @admin.register(Test)
 class TestAdmin(admin.ModelAdmin):
     list_display = ("title",)

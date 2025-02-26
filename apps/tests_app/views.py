@@ -6,6 +6,19 @@ from .models import *
 from .serializers import *
 
 
+class TestStartView(APIView):
+    def get(self, request):
+        test_start = TestStart.objects.first()
+        tests = Test.objects.all()
+
+        if not test_start:
+            return Response({"error": "No TestStart objects found"}, status=404)
+
+        test_start_data = TestStartSerializer(test_start).data
+        test_start_data["tests"] = TestAboutSerializer(tests, many=True).data
+        return Response(test_start_data)
+
+
 class TestDetailView(generics.RetrieveAPIView):
     queryset = Test.objects.all()
     serializer_class = TestSerializer
@@ -31,6 +44,17 @@ class SubmitTestView(APIView):
             if set(user_selected) == set(correct_answers):
                 correct_count += 1
 
+        score_percentage = (
+            (correct_count / total_questions) * 100 if total_questions > 0 else 0
+        )
+        passed = score_percentage >= 50
+        status = passed
+        status_message = (
+            "Прекрасно! Вы успешно прошли тест."
+            if passed
+            else "Упс! Вам нужно еще поработать с собой."
+        )
+
         result = TestResult.objects.create(
             user=user,
             test=test,
@@ -44,5 +68,7 @@ class SubmitTestView(APIView):
                 "correct_answers": correct_count,
                 "total_questions": total_questions,
                 "score": f"{total_questions}/{correct_count}",
+                "status": status,
+                "status_message": status_message,
             }
         )

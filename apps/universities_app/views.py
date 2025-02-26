@@ -1,10 +1,12 @@
 from django.db.models.functions import Coalesce
 from django.db.models import Q, F, Count
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import generics, filters, viewsets
+from rest_framework.response import Response
+from rest_framework.request import Request
+from rest_framework import generics, filters, viewsets, views, status
 
-from .models import Universities, Country
+from .models import Directions, Universities, Country
 from .serializers import (
     CountryDetailSerializer,
     CountrySerializer,
@@ -15,11 +17,11 @@ from .filters import UniversityFilter
 
 
 # UNIVERSITIES
-class UniversitiesListView(generics.ListAPIView):
-    serializer_class = UniversitiesSerializer
+class UniversitiesListView(views.APIView):
 
-    def get_queryset(self):
-        query = self.request.GET.get("search", "").strip()
+    def post(self, request: Request, *args, **kwargs):
+        country_id = request.data.get("country_id", None)
+        search_query = request.query_params.get("search", "").strip()
 
         queryset = (
             Universities.objects.annotate(
@@ -30,10 +32,15 @@ class UniversitiesListView(generics.ListAPIView):
             .select_related("country")
         )
 
-        if query:
-            queryset = queryset.filter(university_name__icontains=query)
+        if country_id:
+            queryset = queryset.filter(country_id=country_id)
+        if search_query:
+            queryset = queryset.filter(university_name__icontains=search_query)
 
-        return queryset
+        serializer = UniversitiesSerializer(
+            queryset, many=True, context={"request": request}
+        )
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class UniversitiesHomeView(generics.ListAPIView):
@@ -100,3 +107,26 @@ class CountryDetailView(generics.RetrieveAPIView):
 
     def get_object(self):
         return get_object_or_404(Country, id=self.kwargs["id"])
+
+    def get_serializer_context(self):
+        return {"request": self.request}
+
+
+class StaticFilter(views.APIView):
+    def get(self, request, *args, **kwargs):
+        filters = {
+            "year_of_study": [
+                {"value": 2, "label": "2-года"},
+                {"value": 4, "label": "4-года"},
+            ],
+            "is_state": [
+                {"value": "", "label": "Все"},
+                {"value": True, "label": "Государственный"},
+                {"value": False, "label": "Частный"},
+            ],
+            "direction": [
+                {"value": direction.id, "label": direction.direction}
+                for direction in Directions.objects.all()
+            ],
+        }
+        return Response(filters, status=status.HTTP_200_OK)

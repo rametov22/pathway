@@ -20,3 +20,20 @@ DATABASES = {
         "PORT": "5432",
     }
 }
+
+SESSION_COOKIE_SECURE = False
+CSRF_COOKIE_SECURE = False
+SESSION_COOKIE_DOMAIN = None
+SESSION_ENGINE = "django.contrib.sessions.backends.db"
+
+SWAGGER_SETTINGS = {
+    "SECURITY_DEFINITIONS": {
+        "Bearer": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header",
+            "description": "Введите JWT-токен в формате: Bearer <token>",
+        }
+    },
+    "USE_SESSION_AUTH": False,
+}

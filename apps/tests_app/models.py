@@ -1,9 +1,16 @@
 from django.db import models
 from django.conf import settings
+from mdeditor.fields import MDTextField
+
+
+class TestStart(models.Model):
+    title = models.CharField(max_length=152)
+    description = MDTextField()
 
 
 class Test(models.Model):
     title = models.CharField(max_length=255)
+    is_active = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title
