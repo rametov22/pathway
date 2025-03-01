@@ -1,14 +1,16 @@
 import os
 import random
+from django.conf import settings
 from django.core.mail import send_mail
 from django.contrib.auth import authenticate
 from django.contrib.auth.hashers import check_password
-from django.forms import CharField
 from django_countries.serializers import CountryFieldMixin
 from django.contrib.auth.hashers import make_password
 from rest_framework import serializers
 from rest_framework_simplejwt.tokens import RefreshToken
 from phonenumber_field.serializerfields import PhoneNumberField
+
+from Inconnect.core import PyInconnect
 
 from .models import (
     Answer,
@@ -20,6 +22,9 @@ from .models import (
     UserDocument,
 )
 from .validators.file_size import validate_file_size
+
+
+mail_client = PyInconnect(api_key=settings.API_KEY_SMTP)
 
 
 class RegisterStep1Serializer(serializers.ModelSerializer):
@@ -50,21 +55,21 @@ class RegisterStep1Serializer(serializers.ModelSerializer):
     def create(self, validated_data):
         validated_data.pop("confirm_password")
 
-        # verification_code = str(random.randint(100000, 999999))
+        verification_code = str(random.randint(100000, 999999))
         user = User.objects.create(
             email=validated_data["email"],
             password=make_password(validated_data["password"]),
             is_active=False,
-            verification_code="123456",
+            verification_code=verification_code,
         )
 
-        # send_mail(
-        #     subject="Восстановление пароля",
-        #     message=f"Ваш код для восстановления пароля: {verification_code}",
-        #     from_email=None,
-        #     recipient_list=[user.email],
-        #     fail_silently=False,
-        # )
+        mail_client.send_email(
+            name="pathway",
+            from_email="info@pthwy.co",
+            to_email=user.email,
+            subject="Восстановление пароля",
+            message=f"Ваш код для восстановления пароля: {verification_code}",
+        )
         return user
 
 
@@ -248,18 +253,17 @@ class ForgotPasswordSerializer(serializers.Serializer):
 
     def save(self):
         user = User.objects.get(email=self.validated_data["email"])
-        # verification_code = str(random.randint(100000, 999999))
-        # user.verification_code = verification_code
-        user.verification_code = "123456"
+        verification_code = str(random.randint(100000, 999999))
+        user.verification_code = verification_code
         user.save()
 
-        # send_mail(
-        #     subject="Восстановление пароля",
-        #     message=f"Ваш код для восстановления пароля: {verification_code}",
-        #     from_email=None,
-        #     recipient_list=[user.email],
-        #     fail_silently=False,
-        # )
+        mail_client.send_email(
+            name="pathway",
+            from_email="info@pthwy.co",
+            to_email=user.email,
+            subject="Восстановление пароля",
+            message=f"Ваш код для восстановления пароля: {verification_code}",
+        )
 
         return {
             "message": "Код востановления отправлен на почту.",
