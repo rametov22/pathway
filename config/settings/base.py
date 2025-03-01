@@ -199,11 +199,6 @@ TIME_ZONE = "Asia/Tashkent"
 USE_I18N = True
 USE_TZ = True
 
-STATIC_URL = "static/"
-STATIC_DIR = BASE_DIR / "static_dev"
-STATICFILES_DIRS = [STATIC_DIR]
-STATIC_ROOT = BASE_DIR / "static"
-
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
