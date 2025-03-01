@@ -2,6 +2,8 @@ from .base import *
 
 ALLOWED_HOSTS = ["www.pthwy.co", "pthwy.co", "localhost"]
 
+CSRF_TRUSTED_ORIGINS = ["https://pthwy.co", "https://www.pthwy.co"]
+
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
