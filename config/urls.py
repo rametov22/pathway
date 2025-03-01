@@ -4,7 +4,6 @@ from django.conf.urls.static import static
 from django.conf import settings
 from rest_framework import permissions
 from rest_framework_simplejwt.views import TokenRefreshView
-from debug_toolbar.toolbar import debug_toolbar_urls
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
@@ -53,5 +52,8 @@ urlpatterns = (
     ]
     + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-    + debug_toolbar_urls()
 )
+if settings.DEBUG:
+    import debug_toolbar
+
+    urlpatterns += [path("__debug__/", include(debug_toolbar.urls))]
