@@ -4,12 +4,24 @@ ALLOWED_HOSTS = ["www.pthwy.co", "pthwy.co", "localhost"]
 
 CSRF_TRUSTED_ORIGINS = ["https://pthwy.co", "https://www.pthwy.co"]
 
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.postgresql",
+#         "NAME": "pathway_db",
+#         "USER": "pathway_user",
+#         "PASSWORD": "Rr25808773",
+#         "HOST": "localhost",
+#         "PORT": "5432",
+#     }
+# }
+
+
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "pathway_db",
-        "USER": "pathway_user",
-        "PASSWORD": "Rr25808773",
+        "NAME": "test_db",
+        "USER": "test_user",
+        "PASSWORD": "test_password",
         "HOST": "localhost",
         "PORT": "5432",
     }
