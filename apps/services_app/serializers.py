@@ -42,10 +42,13 @@ class ServiceDetailSerializer(serializers.ModelSerializer):
         def add_base_url_to_images(text):
             import re
 
-            pattern = r"(!\[.*?\]\()(/media/.*?)(\))"
+            pattern = r"(!\[.*?\]\()(/?media[\\/].*?)(\))"
 
             def replace_with_base_url(match):
-                return f"{match.group(1)}{urljoin(base_url, match.group(2))}{match.group(3)}"
+                fixed_path = match.group(2).replace("\\", "/")
+                fixed_path = re.sub(r"^media/", "", fixed_path)
+                full_url = urljoin(base_url, fixed_path)
+                return f"{match.group(1)}{full_url}{match.group(3)}"
 
             return re.sub(pattern, replace_with_base_url, text)
 
