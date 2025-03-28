@@ -34,6 +34,12 @@ DATABASES = {
     },
 }
 
+# DB_NAME=pathway_db
+# DB_USER=postgres
+# DB_PASSWORD=Rr25808773
+# DB_HOST=localhost
+# DB_PORT=5432
+
 SESSION_COOKIE_SECURE = False
 CSRF_COOKIE_SECURE = False
 SESSION_COOKIE_DOMAIN = None
