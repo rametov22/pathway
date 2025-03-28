@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
+from django.views.generic import TemplateView
 from rest_framework import permissions
 from rest_framework_simplejwt.views import TokenRefreshView
 from drf_yasg.views import get_schema_view
@@ -48,6 +49,8 @@ urlpatterns = (
         path("api/v1/additionals/", include("apps.additionals_app.urls")),
         path("api/v1/experts/", include("apps.experts_app.urls")),
         path("api/v1/test/", include("apps.tests_app.urls")),
+        path("privacy/", TemplateView.as_view(template_name="privacy_policy.html")),
+        path("offer/", TemplateView.as_view(template_name="offer.html")),
         path("mdeditor/", include("mdeditor.urls")),
     ]
     + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

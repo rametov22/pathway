@@ -10,15 +10,28 @@ MIDDLEWARE += [
     "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
+
+# политика конфедетиальности
+# пользователсякая соглашение
+
+
 DATABASES = {
-    "default": {
+    "default2": {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "pathway_db",
         "USER": "postgres",
         "PASSWORD": "0022",
         "HOST": "localhost",
         "PORT": "5432",
-    }
+    },
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "layout_pathway_db",
+        "USER": "postgres",
+        "PASSWORD": "0022",
+        "HOST": "localhost",
+        "PORT": "5432",
+    },
 }
 
 SESSION_COOKIE_SECURE = False
