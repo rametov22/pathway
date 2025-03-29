@@ -1,8 +1,19 @@
 from .base import *
 
-ALLOWED_HOSTS = ["www.pthwy.co", "pthwy.co", "localhost"]
+ALLOWED_HOSTS = [
+    "www.pthwy.co",
+    "pthwy.co",
+    "api.pthwy.co",
+    "www.api.pthwy.co",
+    "localhost",
+]
 
-CSRF_TRUSTED_ORIGINS = ["https://pthwy.co", "https://www.pthwy.co"]
+CSRF_TRUSTED_ORIGINS = [
+    "https://pthwy.co",
+    "https://www.pthwy.co",
+    "https://api.pthwy.co",
+    "https://www.api.pthwy.co",
+]
 
 DATABASES = {
     "default": {

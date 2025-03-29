@@ -11,10 +11,6 @@ MIDDLEWARE += [
 ]
 
 
-# политика конфедетиальности
-# пользователсякая соглашение
-
-
 DATABASES = {
     "default2": {
         "ENGINE": "django.db.backends.postgresql",
