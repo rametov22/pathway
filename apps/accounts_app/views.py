@@ -145,14 +145,20 @@ class LogoutView(views.APIView):
 class GoogleLoginApiView(views.APIView):
     def post(self, request):
         token = request.data.get("token")
+        platform = request.data.get("platform")
 
         if not token:
             return Response({"error": "Token is required"}, status=400)
 
+        if platform == "android":
+            client_id = settings.GOOGLE_CLIENT_ID_ANDROID
+        elif platform == "ios":
+            client_id = settings.GOOGLE_CLIENT_ID_IOS
+        else:
+            return Response({"error": "Invalid platform specified"}, status=400)
+
         try:
-            idinfo = id_token.verify_oauth2_token(
-                token, requests.Request(), settings.GOOGLE_CLIENT_ID
-            )
+            idinfo = id_token.verify_oauth2_token(token, requests.Request(), client_id)
 
             if "email" not in idinfo:
                 return Response({"error": "Invalid token"}, status=400)
