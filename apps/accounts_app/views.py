@@ -142,6 +142,20 @@ class LogoutView(views.APIView):
             return Response({"error": str(e)}, status=400)
 
 
+class DeleteAccountView(generics.DestroyAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_object(self):
+        return self.request.user
+
+    def destroy(self, request, *args, **kwargs):
+        user = self.get_object()
+        user.delete()
+        return Response(
+            {"message", "Аккаунт успещно удалён"}, status=status.HTTP_204_NO_CONTENT
+        )
+
+
 class GoogleLoginApiView(views.APIView):
     def post(self, request):
         token = request.data.get("token")

@@ -12,7 +12,7 @@ MIDDLEWARE += [
 
 
 DATABASES = {
-    "default2": {
+    "default": {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "pathway_db",
         "USER": "postgres",
@@ -20,7 +20,7 @@ DATABASES = {
         "HOST": "localhost",
         "PORT": "5432",
     },
-    "default": {
+    "default2": {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "layout_pathway_db",
         "USER": "postgres",
