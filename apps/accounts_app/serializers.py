@@ -71,13 +71,6 @@ class RegisterStep1Serializer(serializers.ModelSerializer):
             },
         )
 
-        # user = User.objects.create(
-        #     email=email,
-        #     password=make_password(validated_data["password"]),
-        #     is_active=False,
-        #     verification_code=verification_code,
-        # )
-
         mail_client.send_email(
             name="pathway",
             from_email="info@pthwy.co",
