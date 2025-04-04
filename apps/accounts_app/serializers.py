@@ -42,11 +42,14 @@ class RegisterStep1Serializer(serializers.ModelSerializer):
         fields = ["email", "password", "confirm_password"]
 
     def validate(self, data):
+        existing_user = User.objects.filter(email=data["email"]).first()
+
         if data["password"] != data["confirm_password"]:
             raise serializers.ValidationError(
                 {"confirm_password": "Пароли на совпадают."}
             )
-        if User.objects.filter(email=data["email"]).exists():
+
+        if existing_user and existing_user.is_active:
             raise serializers.ValidationError(
                 {"email": "Пользователь с таким email уже существует."}
             )
@@ -54,10 +57,13 @@ class RegisterStep1Serializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         validated_data.pop("confirm_password")
+        email = validated_data["email"]
+
+        User.objects.filter(email=email, is_active=False).delete()
 
         verification_code = str(random.randint(100000, 999999))
         user = User.objects.create(
-            email=validated_data["email"],
+            email=email,
             password=make_password(validated_data["password"]),
             is_active=False,
             verification_code=verification_code,
