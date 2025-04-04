@@ -28,6 +28,7 @@ mail_client = PyInconnect(api_key=settings.API_KEY_SMTP)
 
 
 class RegisterStep1Serializer(serializers.ModelSerializer):
+    email = serializers.EmailField(write_only=True)
     password = serializers.CharField(
         write_only=True,
         required=True,
@@ -42,12 +43,12 @@ class RegisterStep1Serializer(serializers.ModelSerializer):
         fields = ["email", "password", "confirm_password"]
 
     def validate(self, data):
-        existing_user = User.objects.filter(email=data["email"]).first()
-
         if data["password"] != data["confirm_password"]:
             raise serializers.ValidationError(
-                {"confirm_password": "Пароли на совпадают."}
+                {"confirm_password": "Пароли не совпадают."}
             )
+
+        existing_user = User.objects.filter(email=data["email"]).first()
 
         if existing_user and existing_user.is_active:
             raise serializers.ValidationError(
@@ -59,15 +60,23 @@ class RegisterStep1Serializer(serializers.ModelSerializer):
         validated_data.pop("confirm_password")
         email = validated_data["email"]
 
-        User.objects.filter(email=email, is_active=False).delete()
-
         verification_code = str(random.randint(100000, 999999))
-        user = User.objects.create(
+
+        user, created = User.objects.update_or_create(
             email=email,
-            password=make_password(validated_data["password"]),
-            is_active=False,
-            verification_code=verification_code,
+            defaults={
+                "password": make_password(validated_data["password"]),
+                "is_active": False,
+                "verification_code": verification_code,
+            },
         )
+
+        # user = User.objects.create(
+        #     email=email,
+        #     password=make_password(validated_data["password"]),
+        #     is_active=False,
+        #     verification_code=verification_code,
+        # )
 
         mail_client.send_email(
             name="pathway",
@@ -229,11 +238,13 @@ class LoginSerializer(serializers.Serializer):
         except User.DoesNotExist:
             raise serializers.ValidationError("Invalid email")
 
+        if not user.is_active:
+            raise serializers.ValidationError(
+                "Пользователь с такой почтой не существует"
+            )
+
         if not check_password(password, user.password):
             raise serializers.ValidationError("Invalid password")
-
-        if not user.is_active:
-            raise serializers.ValidationError("Your account is not active")
 
         refresh = RefreshToken.for_user(user)
 
