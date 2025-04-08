@@ -19,7 +19,6 @@ django-admin-rangefilter==0.13.2
 django-countries==7.6.1
 django-filter==24.3
 django-mdeditor==0.1.20
-django-modeltranslation==0.19.12
 django-phonenumber-field==8.0.0
 djangorestframework==3.15.2
 djangorestframework_simplejwt==5.4.0
