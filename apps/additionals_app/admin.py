@@ -1,5 +1,7 @@
 from django.contrib import admin
 
+from modeltranslation.admin import TabbedTranslationAdmin
+
 from .models import FAQModel, OurNetworks
 
 
@@ -9,5 +11,5 @@ class OurNetworksAdmin(admin.ModelAdmin):
 
 
 @admin.register(FAQModel)
-class FAQAdmin(admin.ModelAdmin):
+class FAQAdmin(TabbedTranslationAdmin):
     pass

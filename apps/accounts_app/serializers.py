@@ -4,6 +4,7 @@ from django.conf import settings
 from django.core.mail import send_mail
 from django.contrib.auth import authenticate
 from django.contrib.auth.hashers import check_password
+from django.utils.translation import gettext as _
 from django_countries.serializers import CountryFieldMixin
 from django.contrib.auth.hashers import make_password
 from rest_framework import serializers
@@ -34,7 +35,9 @@ class RegisterStep1Serializer(serializers.ModelSerializer):
         required=True,
         min_length=8,
         style={"input_type": "password"},
-        error_messages={"min_length": "Password must be at least 8 characters long."},
+        error_messages={
+            "min_length": _("Пароль должен быть длиной не менее 8 символов.")
+        },
     )
     confirm_password = serializers.CharField(write_only=True, min_length=8)
 
@@ -45,14 +48,14 @@ class RegisterStep1Serializer(serializers.ModelSerializer):
     def validate(self, data):
         if data["password"] != data["confirm_password"]:
             raise serializers.ValidationError(
-                {"confirm_password": "Пароли не совпадают."}
+                {"confirm_password": _("Пароли не совпадают.")}
             )
 
         existing_user = User.objects.filter(email=data["email"]).first()
 
         if existing_user and existing_user.is_active:
             raise serializers.ValidationError(
-                {"email": "Пользователь с таким email уже существует."}
+                {"email": _("Пользователь с такой электронной почтой не найден.")}
             )
         return data
 
@@ -75,8 +78,8 @@ class RegisterStep1Serializer(serializers.ModelSerializer):
             name="pathway",
             from_email="info@pthwy.co",
             to_email=user.email,
-            subject="Восстановление пароля",
-            message=f"Ваш код для восстановления пароля: {verification_code}",
+            subject=_("Восстановление пароля"),
+            message=f"{_('Ваш код для восстановления пароля:')} {verification_code}",
         )
         return user
 
@@ -90,14 +93,14 @@ class VerifyCodeSerializer(serializers.Serializer):
         if not user:
             raise serializers.ValidationError({"user_id": "Пользователь не найден."})
         if user.verification_code != data["code"]:
-            raise serializers.ValidationError({"code": "Неверный код."})
+            raise serializers.ValidationError({"code": _("Неверный код.")})
         return data
 
     def save(self):
         user = User.objects.get(id=self.validated_data["user_id"])
         user.verification_code = None
         user.save()
-        return {"message": "Код подтвержден.", "user_id": user.id}
+        return {"message": _("Код подтвержден."), "user_id": user.id}
 
 
 class CompleteProfileSerializer(serializers.ModelSerializer):
@@ -114,11 +117,13 @@ class CompleteProfileSerializer(serializers.ModelSerializer):
 
     def validate(self, data):
         if not data.get("name"):
-            raise serializers.ValidationError({"name": "Это поле обязательно."})
+            raise serializers.ValidationError({"name": _("Это поле обязательно.")})
         if not data.get("gender"):
-            raise serializers.ValidationError({"gender": "Это поле обязательно."})
+            raise serializers.ValidationError({"gender": _("Это поле обязательно.")})
         if not data.get("birth_date"):
-            raise serializers.ValidationError({"birth_date": "Это поле обязательно."})
+            raise serializers.ValidationError(
+                {"birth_date": _("Это поле обязательно.")}
+            )
         return data
 
     def update(self, instance, validated_data):
@@ -179,9 +184,7 @@ class UserAnswerSerializer(serializers.Serializer):
                 answer = Answer.objects.filter(id=answer_id, question=question).first()
                 if not answer:
                     raise serializers.ValidationError(
-                        {
-                            f"answer_{answer_id}": f"Ответ {answer_id} не принадлежит вопросу {question_id}"
-                        }
+                        f"Ответ {answer_id} не принадлежит вопросу {question_id}"
                     )
         return data
 
@@ -202,12 +205,12 @@ class UserAnswerSerializer(serializers.Serializer):
 
             refresh = RefreshToken.for_user(user)
             return {
-                "message": "Регистрация заверщена.",
+                "message": _("Регистрация заверщена."),
                 "access_token": str(refresh.access_token),
                 "refresh": str(refresh),
             }
 
-        return {"message": "Ответы сохранены."}
+        return {"message": _("Ответы сохранены.")}
 
 
 class LoginSerializer(serializers.Serializer):
@@ -217,7 +220,9 @@ class LoginSerializer(serializers.Serializer):
         required=True,
         min_length=8,
         style={"input_type": "password"},
-        error_messages={"min_length": "Password must be at least 8 characters long."},
+        error_messages={
+            "min_length": _("Password must be at least 8 characters long.")
+        },
     )
 
     def validate(self, data):
@@ -229,15 +234,15 @@ class LoginSerializer(serializers.Serializer):
         try:
             user = User.objects.get(email=email)
         except User.DoesNotExist:
-            raise serializers.ValidationError("Invalid email")
+            raise serializers.ValidationError(_("Invalid email"))
 
         if not user.is_active:
             raise serializers.ValidationError(
-                "Пользователь с такой почтой не существует"
+                _("Пользователь с такой электронной почтой не существует. ")
             )
 
         if not check_password(password, user.password):
-            raise serializers.ValidationError("Invalid password")
+            raise serializers.ValidationError(_("Invalid password"))
 
         refresh = RefreshToken.for_user(user)
 
@@ -257,7 +262,7 @@ class ForgotPasswordSerializer(serializers.Serializer):
         user = User.objects.filter(email=email).first()
         if not user:
             raise serializers.ValidationError(
-                {"email": "Пользователь с таким email не найден."}
+                {"email": _("Пользователь с такой электронной почтой не найден.")}
             )
         return data
 
@@ -271,12 +276,12 @@ class ForgotPasswordSerializer(serializers.Serializer):
             name="pathway",
             from_email="info@pthwy.co",
             to_email=user.email,
-            subject="Восстановление пароля",
-            message=f"Ваш код для восстановления пароля: {verification_code}",
+            subject=_("Восстановление пароля"),
+            message=f"{_('Ваш код для восстановления пароля:')} {verification_code}",
         )
 
         return {
-            "message": "Код востановления отправлен на почту.",
+            "message": _("Код восстановления отправлен на электронную почту."),
             "email": user.email,
         }
 
@@ -291,9 +296,9 @@ class VerifyResetCodeSerializer(serializers.Serializer):
         user = User.objects.filter(email=email).first()
 
         if not user:
-            raise serializers.ValidationError({"email": "Пользователь не найден"})
+            raise serializers.ValidationError({"email": _("Пользователь не найден")})
         if user.verification_code != code:
-            raise serializers.ValidationError({"code": "Код не совпадает"})
+            raise serializers.ValidationError({"code": _("Код не совпадает")})
         return data
 
     def save(self):
@@ -301,7 +306,7 @@ class VerifyResetCodeSerializer(serializers.Serializer):
         user.verification_code = None
         user.save()
         return {
-            "message": "Код подтвержден, установите новый пароль.",
+            "message": _("Код подтверждён. Установите новый пароль."),
             "email": user.email,
         }
 
@@ -316,7 +321,7 @@ class ResetPasswordSerializer(serializers.Serializer):
     def validate(self, data):
         if data["password"] != data["confirm_password"]:
             raise serializers.ValidationError(
-                {"confirm_password": "Пароли не совпадают."}
+                {"confirm_password": _("Пароли не совпадают.")}
             )
         return data
 
@@ -324,7 +329,11 @@ class ResetPasswordSerializer(serializers.Serializer):
         user = User.objects.get(email=self.validated_data["email"])
         user.password = make_password(self.validated_data["password"])
         user.save()
-        return {"message": "Пароль успешно изменен. Теперь вы можете войти в аккаунт."}
+        return {
+            "message": _(
+                "Пароль успешно изменён. Теперь вы можете войти в свою учётную запись."
+            )
+        }
 
 
 # PROFILE
@@ -480,7 +489,12 @@ class ApplicationDocumentUploadSerializer(serializers.ModelSerializer):
 
         if application.status in ["in_progress", "approved"]:
             raise serializers.ValidationError(
-                f"Нельзя загружать файлы для этой заявки. вы уже загрузили, status: {application.status}"
+                {
+                    "message": _(
+                        "Нельзя загружать файлы для этой заявки — вы уже их загрузили."
+                    )
+                    + f", status: {application.status}"
+                }
             )
 
         application.status = "in_progress"

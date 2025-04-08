@@ -14,6 +14,7 @@ ALLOWED_HOSTS = []
 INTERNAL_IPS = ("127.0.0.1",)
 
 INSTALLED_APPS = [
+    "modeltranslation",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -29,6 +30,7 @@ INSTALLED_APPS = [
     "phonenumber_field",
     "rangefilter",
     "django_filters",
+    "rosetta",
     "mdeditor",
     "drf_yasg",
     "apps.universities_app",
@@ -43,6 +45,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.locale.LocaleMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -195,10 +198,24 @@ TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 TELEGRAM_ADMIN_CHAT_ID = os.getenv("TELEGRAM_ADMIN_CHAT_ID")
 TELEGRAM_GROUP_CHAT_ID = os.getenv("TELEGRAM_GROUP_CHAT_ID")
 
+ROSETTA_AUTO_UPLOAD = True
+ROSETTA_SHOW_AT_ADMIN_PANEL = True
+ROSETTA_MESSAGES_PER_PAGE = 20
+
+LOCALE_PATHS = [BASE_DIR / "locale"]
+
+LANGUAGES = [
+    ("ru", "Russian"),
+    ("en", "English"),
+    ("uz", "Uzbek"),
+]
+
 LANGUAGE_CODE = "ru"
+MODELTRANSLATION_DEFAULT_LANGUAGE = "ru"
 
 TIME_ZONE = "Asia/Tashkent"
 USE_I18N = True
+USE_L10N = True
 USE_TZ = True
 
 MEDIA_URL = "/media/"

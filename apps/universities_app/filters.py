@@ -5,15 +5,15 @@ from .models import Directions, Universities
 class UniversityFilter(django_filters.FilterSet):
     year_of_study = django_filters.MultipleChoiceFilter(
         field_name="year_of_study",
-        choices=[(2, "2-года"), (4, "4-года")],
+        choices=[(2, "2 года"), (4, "4 года")],
         label="Год обучения",
     )
     is_state = django_filters.ChoiceFilter(
         field_name="is_state",
         choices=[
-            ("", "Все"),
-            (True, "Государственный"),
-            (False, "Частный"),
+            ("", "Все университеты"),
+            (True, "Государственный университет"),
+            (False, "Частный университет"),
         ],
         label="Государственный университет",
         empty_label=None,

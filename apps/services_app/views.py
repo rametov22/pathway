@@ -1,4 +1,5 @@
 from django.shortcuts import get_object_or_404
+from django.utils.translation import gettext as _
 from rest_framework import generics, permissions, status
 from rest_framework.response import Response
 
@@ -46,7 +47,9 @@ class ServiceDetailView(generics.RetrieveAPIView):
         if existing_application:
             return Response(
                 {
-                    "message": "Вы уже оставили заявку на этот сервис",
+                    "message": _(
+                        "Вы уже оставили заявку на этот сервис. Повторная отправка невозможна."
+                    ),
                     "status": existing_application.status,
                 },
                 status=status.HTTP_400_BAD_REQUEST,
@@ -56,7 +59,7 @@ class ServiceDetailView(generics.RetrieveAPIView):
             user=request.user, service=service
         )
         return Response(
-            {"message": "Заявка успещно отправлена", "status": application.status},
+            {"message": _("Заявка успещно отправлена"), "status": application.status},
             status=status.HTTP_201_CREATED,
         )
 

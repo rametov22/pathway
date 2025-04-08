@@ -1,3 +1,4 @@
+from django.utils.translation import gettext as _
 from rest_framework import generics
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -50,9 +51,9 @@ class SubmitTestView(APIView):
         passed = score_percentage >= 50
         status = passed
         status_message = (
-            "Прекрасно! Вы успешно прошли тест."
+            _("Прекрасно! Вы успешно прошли тест.")
             if passed
-            else "Упс! Вам нужно еще поработать с собой."
+            else _("Упс! Попробуйте ещё раз — у вас всё получится.")
         )
 
         result = TestResult.objects.create(

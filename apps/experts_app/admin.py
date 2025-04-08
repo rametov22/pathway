@@ -1,13 +1,15 @@
 from django.contrib import admin
 
+from modeltranslation.admin import TabbedTranslationAdmin
+
 from .models import Expert, SuccessStories
 
 
 @admin.register(Expert)
-class ExpertAdmin(admin.ModelAdmin):
+class ExpertAdmin(TabbedTranslationAdmin):
     pass
 
 
 @admin.register(SuccessStories)
-class SuccessStories(admin.ModelAdmin):
+class SuccessStories(TabbedTranslationAdmin):
     pass

@@ -2,6 +2,7 @@ from collections import defaultdict
 from datetime import datetime
 from django.conf import settings
 from django.db.models import F
+from django.utils.translation import gettext as _
 from django.shortcuts import get_object_or_404
 from django_countries import countries
 from rest_framework import generics, status, views, permissions
@@ -31,7 +32,7 @@ class RegisterStep1View(generics.CreateAPIView):
         return Response(
             {
                 "user_id": user.id,
-                "message": "Код подтвержденя отправлен.",
+                "message": _("Код подтвержденя отправлен."),
             },
             status=status.HTTP_201_CREATED,
         )
@@ -63,7 +64,7 @@ class CompleteProfileView(generics.UpdateAPIView):
         if serializer.is_valid():
             serializer.save()
             return Response(
-                {"user_id": user.id, "message": "Профиль успешно обновлен."},
+                {"user_id": user.id, "message": _("Профиль успешно обновлён.")},
                 status=status.HTTP_200_OK,
             )
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -137,7 +138,7 @@ class LogoutView(views.APIView):
             refresh_token = request.data.get("refresh")
             token = RefreshToken(refresh_token)
             token.blacklist()
-            return Response({"message": "Successfully logged out."}, status=200)
+            return Response({"message": _("Successfully logged out.")}, status=200)
         except Exception as e:
             return Response({"error": str(e)}, status=400)
 
@@ -152,7 +153,7 @@ class DeleteAccountView(generics.DestroyAPIView):
         user = self.get_object()
         user.delete()
         return Response(
-            {"message", "Аккаунт успещно удалён"}, status=status.HTTP_204_NO_CONTENT
+            {"message", _("Аккаунт успещно удалён")}, status=status.HTTP_204_NO_CONTENT
         )
 
 
@@ -233,7 +234,7 @@ class ProfileUpdateView(generics.RetrieveUpdateAPIView):
         if serializer.is_valid():
             serializer.save()
             return Response(
-                {"message": "Профиль успещно обновлен", "data": serializer.data}
+                {"message": _("Профиль успешно обновлён."), "data": serializer.data}
             )
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -296,7 +297,7 @@ class ProfileDocumentsAllView(generics.ListAPIView):
         document = get_object_or_404(UserDocument, id=document_id, user=request.user)
         document.delete()
         return Response(
-            {"message": "Документ успешно удалён"}, status=status.HTTP_204_NO_CONTENT
+            {"message": _("Документ успешно удалён")}, status=status.HTTP_204_NO_CONTENT
         )
 
 

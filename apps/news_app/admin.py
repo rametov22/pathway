@@ -1,4 +1,7 @@
 from django.contrib import admin
+
+from modeltranslation.admin import TabbedTranslationAdmin
+
 from .models import (
     Category,
     News,
@@ -9,12 +12,12 @@ from .models import (
 
 
 @admin.register(News)
-class NewsAdmin(admin.ModelAdmin):
+class NewsAdmin(TabbedTranslationAdmin):
     readonly_fields = ("date_added",)
 
 
 @admin.register(Category)
-class Category(admin.ModelAdmin):
+class Category(TabbedTranslationAdmin):
     pass
 
 

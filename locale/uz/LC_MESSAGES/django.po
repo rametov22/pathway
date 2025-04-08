@@ -1,0 +1,182 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-04-07 15:19+0500\n"
+"PO-Revision-Date: 2025-04-07 16:34+0500\n"
+"Last-Translator:   <pathwayadmin@gmail.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Translated-Using: django-rosetta 0.10.2\n"
+
+#: .\apps\accounts_app\serializers.py:39
+msgid "Пароль должен быть длиной не менее 8 символов."
+msgstr "Parol kamida 8 ta belgidan iborat bo'lishi kerak."
+
+#: .\apps\accounts_app\serializers.py:51
+#: .\apps\accounts_app\serializers.py:324
+msgid "Пароли не совпадают."
+msgstr "Parollar mos kelmayapti."
+
+#: .\apps\accounts_app\serializers.py:58
+#: .\apps\accounts_app\serializers.py:265
+msgid "Пользователь с такой электронной почтой не найден."
+msgstr "Bu elektron pochta bilan foydalanuvchi topilmadi."
+
+#: .\apps\accounts_app\serializers.py:81
+#: .\apps\accounts_app\serializers.py:279
+msgid "Восстановление пароля"
+msgstr "Parolni tiklash"
+
+#: .\apps\accounts_app\serializers.py:82
+#: .\apps\accounts_app\serializers.py:280
+msgid "Ваш код для восстановления пароля:"
+msgstr "Parolni tiklash kodingiz:"
+
+#: .\apps\accounts_app\serializers.py:96
+msgid "Неверный код."
+msgstr "Yaroqsiz kod."
+
+#: .\apps\accounts_app\serializers.py:103
+msgid "Код подтвержден."
+msgstr "Kod tasdiqlandi."
+
+#: .\apps\accounts_app\serializers.py:120
+#: .\apps\accounts_app\serializers.py:122
+#: .\apps\accounts_app\serializers.py:125
+#: .\apps\services_app\serializers.py:90 .\apps\services_app\serializers.py:93
+msgid "Это поле обязательно."
+msgstr "Ushbu qator to'ldirilishi shart."
+
+#: .\apps\accounts_app\serializers.py:208
+msgid "Регистрация заверщена."
+msgstr "Roʻyxatdan oʻtish tugallandi."
+
+#: .\apps\accounts_app\serializers.py:213
+msgid "Ответы сохранены."
+msgstr "Javoblar saqlandi."
+
+#: .\apps\accounts_app\serializers.py:224
+msgid "Password must be at least 8 characters long."
+msgstr "Parol kamida 8 ta belgidan iborat bo'lishi kerak."
+
+#: .\apps\accounts_app\serializers.py:237
+msgid "Invalid email"
+msgstr "Yaroqsiz email"
+
+#: .\apps\accounts_app\serializers.py:241
+msgid "Пользователь с такой электронной почтой не существует. "
+msgstr "Bu elektron pochta bilan foydalanuvchi mavjud emas."
+
+#: .\apps\accounts_app\serializers.py:245
+msgid "Invalid password"
+msgstr "Yaroqsiz parol"
+
+#: .\apps\accounts_app\serializers.py:284
+msgid "Код восстановления отправлен на электронную почту."
+msgstr "Tiklash kodi elektron pochta orqali yuborildi."
+
+#: .\apps\accounts_app\serializers.py:299
+msgid "Пользователь не найден"
+msgstr "Bunday foydalanuvchi topilmadi"
+
+#: .\apps\accounts_app\serializers.py:301
+msgid "Код не совпадает"
+msgstr "Kod mos emas"
+
+#: .\apps\accounts_app\serializers.py:309
+msgid "Код подтверждён. Установите новый пароль."
+msgstr "Kod tasdiqlandi. Yangi parol o'rnating."
+
+#: .\apps\accounts_app\serializers.py:334
+msgid "Пароль успешно изменён. Теперь вы можете войти в свою учётную запись."
+msgstr ""
+"Parol muvaffaqiyatli o'zgartirildi. Endi siz hisobingizga kirishingiz "
+"mumkin."
+
+#: .\apps\accounts_app\serializers.py:494
+msgid "Нельзя загружать файлы для этой заявки — вы уже их загрузили."
+msgstr "Bu arizaga fayllarni yuklash mumkin emas — ular allaqachon yuklangan."
+
+#: .\apps\accounts_app\views.py:35
+msgid "Код подтвержденя отправлен."
+msgstr "Tasdiqlash kodi yuborildi."
+
+#: .\apps\accounts_app\views.py:67 .\apps\accounts_app\views.py:237
+msgid "Профиль успешно обновлён."
+msgstr "Profil muvaffaqiyatli yangilandi."
+
+#: .\apps\accounts_app\views.py:141
+msgid "Successfully logged out."
+msgstr "Hisobdan muvaffaqiyatli chiqdingiz."
+
+#: .\apps\accounts_app\views.py:156
+msgid "Аккаунт успещно удалён"
+msgstr "Hisob muvaffaqiyatli o'chirildi"
+
+#: .\apps\accounts_app\views.py:300
+msgid "Документ успешно удалён"
+msgstr "Hujjat muvaffaqiyatli o'chirildi"
+
+#: .\apps\services_app\serializers.py:97
+#: .\apps\services_app\serializers.py:101
+msgid "Это поле обьязательно"
+msgstr "Ushbu qator to'ldirilishi shart"
+
+#: .\apps\services_app\serializers.py:109
+#: .\apps\services_app\serializers.py:115
+msgid "Это поле обязательно при вводе номера телефона."
+msgstr "Telefon raqamini kiritishda ushbu maydon to‘ldirilishi shart."
+
+#: .\apps\services_app\serializers.py:124
+#: .\apps\services_app\serializers.py:131
+msgid "Неверный номер телефона."
+msgstr "Telefon raqami noto‘g‘ri."
+
+#: .\apps\services_app\views.py:51
+msgid "Вы уже оставили заявку на этот сервис. Повторная отправка невозможна."
+msgstr ""
+"Siz allaqachon ushbu xizmat uchun so‘rov yuborgansiz. Uni qayta yuborish "
+"mumkin emas."
+
+#: .\apps\services_app\views.py:62
+msgid "Заявка успещно отправлена"
+msgstr "Ilova muvaffaqiyatli yuborildi"
+
+#: .\apps\tests_app\views.py:54
+msgid "Прекрасно! Вы успешно прошли тест."
+msgstr "Ajoyib! Siz sinovdan muvaffaqiyatli o'tdingiz."
+
+#: .\apps\tests_app\views.py:56
+msgid "Упс! Попробуйте ещё раз — у вас всё получится."
+msgstr "Voy! Yana urinib ko‘ring — albatta muvaffaqiyatga erishasiz."
+
+#: .\apps\universities_app\views.py:120
+msgid "2 года"
+msgstr "2 yil"
+
+#: .\apps\universities_app\views.py:121
+msgid "4 года"
+msgstr "4 yil"
+
+#: .\apps\universities_app\views.py:124
+msgid "Все университеты"
+msgstr "Barcha universitetlar"
+
+#: .\apps\universities_app\views.py:125
+msgid "Государственный университет"
+msgstr "Davlat universiteti"
+
+#: .\apps\universities_app\views.py:126
+msgid "Частный университет"
+msgstr "Xususiy universitet"

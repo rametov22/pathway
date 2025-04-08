@@ -1,10 +1,12 @@
 from django.contrib import admin
 
+from modeltranslation.admin import TabbedTranslationAdmin
+
 from .models import *
 
 
 @admin.register(TestStart)
-class TestStart(admin.ModelAdmin):
+class TestStart(TabbedTranslationAdmin):
     list_display = (
         "title",
         "id",
@@ -12,12 +14,12 @@ class TestStart(admin.ModelAdmin):
 
 
 @admin.register(Test)
-class TestAdmin(admin.ModelAdmin):
+class TestAdmin(TabbedTranslationAdmin):
     list_display = ("title",)
 
 
 @admin.register(TestQuestion)
-class TestQuestionAdmin(admin.ModelAdmin):
+class TestQuestionAdmin(TabbedTranslationAdmin):
     list_display = (
         "question",
         "test",
@@ -26,7 +28,7 @@ class TestQuestionAdmin(admin.ModelAdmin):
 
 
 @admin.register(TestAnswer)
-class TestAnswerAdmin(admin.ModelAdmin):
+class TestAnswerAdmin(TabbedTranslationAdmin):
     list_display = (
         "answer",
         "question",

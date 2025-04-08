@@ -1,0 +1,178 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-04-07 15:19+0500\n"
+"PO-Revision-Date: 2025-04-07 16:25+0500\n"
+"Last-Translator:   <pathwayadmin@gmail.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
+"X-Translated-Using: django-rosetta 0.10.2\n"
+
+#: .\apps\accounts_app\serializers.py:39
+msgid "Пароль должен быть длиной не менее 8 символов."
+msgstr "Пароль должен быть длиной не менее 8 символов."
+
+#: .\apps\accounts_app\serializers.py:51
+#: .\apps\accounts_app\serializers.py:324
+msgid "Пароли не совпадают."
+msgstr "Пароли не совпадают."
+
+#: .\apps\accounts_app\serializers.py:58
+#: .\apps\accounts_app\serializers.py:265
+msgid "Пользователь с такой электронной почтой не найден."
+msgstr "Пользователь с такой электронной почтой не найден."
+
+#: .\apps\accounts_app\serializers.py:81
+#: .\apps\accounts_app\serializers.py:279
+msgid "Восстановление пароля"
+msgstr "Восстановление пароля"
+
+#: .\apps\accounts_app\serializers.py:82
+#: .\apps\accounts_app\serializers.py:280
+msgid "Ваш код для восстановления пароля:"
+msgstr "Ваш код для восстановления пароля:"
+
+#: .\apps\accounts_app\serializers.py:96
+msgid "Неверный код."
+msgstr "Неверный код."
+
+#: .\apps\accounts_app\serializers.py:103
+msgid "Код подтвержден."
+msgstr "Код подтвержден."
+
+#: .\apps\accounts_app\serializers.py:120
+#: .\apps\accounts_app\serializers.py:122
+#: .\apps\accounts_app\serializers.py:125
+#: .\apps\services_app\serializers.py:90 .\apps\services_app\serializers.py:93
+msgid "Это поле обязательно."
+msgstr "Это поле обязательно."
+
+#: .\apps\accounts_app\serializers.py:208
+msgid "Регистрация заверщена."
+msgstr "Регистрация заверщена."
+
+#: .\apps\accounts_app\serializers.py:213
+msgid "Ответы сохранены."
+msgstr "Ответы сохранены."
+
+#: .\apps\accounts_app\serializers.py:224
+msgid "Password must be at least 8 characters long."
+msgstr "Пароль должен быть длиной не менее 8 символов."
+
+#: .\apps\accounts_app\serializers.py:237
+msgid "Invalid email"
+msgstr "Неверный адрес электронной почты"
+
+#: .\apps\accounts_app\serializers.py:241
+msgid "Пользователь с такой электронной почтой не существует. "
+msgstr "Пользователь с такой электронной почтой не существует."
+
+#: .\apps\accounts_app\serializers.py:245
+msgid "Invalid password"
+msgstr "Неверный пароль"
+
+#: .\apps\accounts_app\serializers.py:284
+msgid "Код восстановления отправлен на электронную почту."
+msgstr "Код восстановления отправлен на электронную почту."
+
+#: .\apps\accounts_app\serializers.py:299
+msgid "Пользователь не найден"
+msgstr "Пользователь не найден"
+
+#: .\apps\accounts_app\serializers.py:301
+msgid "Код не совпадает"
+msgstr "Код не совпадает"
+
+#: .\apps\accounts_app\serializers.py:309
+msgid "Код подтверждён. Установите новый пароль."
+msgstr "Код подтверждён. Установите новый пароль."
+
+#: .\apps\accounts_app\serializers.py:334
+msgid "Пароль успешно изменён. Теперь вы можете войти в свою учётную запись."
+msgstr "Пароль успешно изменён. Теперь вы можете войти в свою учётную запись."
+
+#: .\apps\accounts_app\serializers.py:494
+msgid "Нельзя загружать файлы для этой заявки — вы уже их загрузили."
+msgstr "Нельзя загружать файлы для этой заявки — вы уже их загрузили."
+
+#: .\apps\accounts_app\views.py:35
+msgid "Код подтвержденя отправлен."
+msgstr "Код подтвержденя отправлен."
+
+#: .\apps\accounts_app\views.py:67 .\apps\accounts_app\views.py:237
+msgid "Профиль успешно обновлён."
+msgstr "Профиль успешно обновлён."
+
+#: .\apps\accounts_app\views.py:141
+msgid "Successfully logged out."
+msgstr "Успешно выход из системы."
+
+#: .\apps\accounts_app\views.py:156
+msgid "Аккаунт успещно удалён"
+msgstr "Аккаунт успещно удалён"
+
+#: .\apps\accounts_app\views.py:300
+msgid "Документ успешно удалён"
+msgstr "Документ успешно удалён"
+
+#: .\apps\services_app\serializers.py:97
+#: .\apps\services_app\serializers.py:101
+msgid "Это поле обьязательно"
+msgstr "Это поле обьязательно"
+
+#: .\apps\services_app\serializers.py:109
+#: .\apps\services_app\serializers.py:115
+msgid "Это поле обязательно при вводе номера телефона."
+msgstr "Это поле обязательно при вводе номера телефона."
+
+#: .\apps\services_app\serializers.py:124
+#: .\apps\services_app\serializers.py:131
+msgid "Неверный номер телефона."
+msgstr "Неверный номер телефона."
+
+#: .\apps\services_app\views.py:51
+msgid "Вы уже оставили заявку на этот сервис. Повторная отправка невозможна."
+msgstr "Вы уже оставили заявку на этот сервис. Повторная отправка невозможна."
+
+#: .\apps\services_app\views.py:62
+msgid "Заявка успещно отправлена"
+msgstr "Заявка успещно отправлена"
+
+#: .\apps\tests_app\views.py:54
+msgid "Прекрасно! Вы успешно прошли тест."
+msgstr "Прекрасно! Вы успешно прошли тест."
+
+#: .\apps\tests_app\views.py:56
+msgid "Упс! Попробуйте ещё раз — у вас всё получится."
+msgstr "Упс! Попробуйте ещё раз — у вас всё получится."
+
+#: .\apps\universities_app\views.py:120
+msgid "2 года"
+msgstr "2 года"
+
+#: .\apps\universities_app\views.py:121
+msgid "4 года"
+msgstr "4 года"
+
+#: .\apps\universities_app\views.py:124
+msgid "Все университеты"
+msgstr "Все университеты"
+
+#: .\apps\universities_app\views.py:125
+msgid "Государственный университет"
+msgstr "Государственный университет"
+
+#: .\apps\universities_app\views.py:126
+msgid "Частный университет"
+msgstr "Частный университет"

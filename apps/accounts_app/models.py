@@ -111,8 +111,6 @@ class UserAnswer(models.Model):
 
 class DefaultApplication(models.Model):
     title = models.CharField(max_length=255)
-    description = models.TextField(blank=True, null=True)
-    required_documents = models.TextField(blank=True, null=True)
     is_active = models.BooleanField(default=True)
     deadline_days = models.PositiveIntegerField(default=20)
     created_at = models.DateTimeField(auto_now_add=True)

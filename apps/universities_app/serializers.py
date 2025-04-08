@@ -7,7 +7,7 @@ from .models import Universities, Country
 
 # UNIVERSITIES
 class UniversitiesSerializer(serializers.ModelSerializer):
-    country = serializers.CharField(source="country.name_en")
+    country = serializers.CharField(source="country.short_name")
     university_img = serializers.SerializerMethodField()
 
     class Meta:
@@ -54,10 +54,10 @@ class UniversitiesDetailSerializer(serializers.ModelSerializer):
         )
 
     def get_country(self, obj):
-        return obj.country.name_en
+        return obj.country.short_name
 
     def get_city_with_country(self, obj):
-        return f"{obj.city}, {obj.country.name_ru}"
+        return f"{obj.city}, {obj.country.name}"
 
     def get_number_of_grants(self, obj):
         try:
@@ -80,7 +80,7 @@ class CountrySerializer(serializers.ModelSerializer):
         fields = (
             "id",
             "country_img",
-            "name_ru",
+            "name",
             "universities_count",
         )
 
@@ -92,7 +92,7 @@ class CountryDetailSerializer(serializers.ModelSerializer):
         model = Country
         fields = (
             "id",
-            "name_ru",
+            "name",
             "country_img",
             "about_universities",
             "universities",

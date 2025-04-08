@@ -1,5 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
+from modeltranslation.admin import TabbedTranslationAdmin
+
 from .models import *
 
 
@@ -93,7 +95,7 @@ class UserAdmin(admin.ModelAdmin):
 
 
 @admin.register(Question)
-class QuestionAdmin(admin.ModelAdmin):
+class QuestionAdmin(TabbedTranslationAdmin):
     list_display = (
         "text",
         "id",
@@ -101,7 +103,7 @@ class QuestionAdmin(admin.ModelAdmin):
 
 
 @admin.register(Answer)
-class AnswerAdmin(admin.ModelAdmin):
+class AnswerAdmin(TabbedTranslationAdmin):
     list_display = (
         "question",
         "text",
@@ -121,7 +123,7 @@ class UserAnswerAdmin(admin.ModelAdmin):
 
 
 @admin.register(DefaultApplication)
-class DefaultApplicationAdmin(admin.ModelAdmin):
+class DefaultApplicationAdmin(TabbedTranslationAdmin):
     list_display = (
         "title",
         "is_active",

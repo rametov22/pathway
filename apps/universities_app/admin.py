@@ -1,9 +1,12 @@
 from django.contrib import admin
+
+from modeltranslation.admin import TabbedTranslationAdmin
+
 from .models import Directions, Universities, Country
 
 
 @admin.register(Universities)
-class UniversitiesAdmin(admin.ModelAdmin):
+class UniversitiesAdmin(TabbedTranslationAdmin):
     list_display = (
         "university_name",
         "id",
@@ -12,9 +15,9 @@ class UniversitiesAdmin(admin.ModelAdmin):
 
 
 @admin.register(Country)
-class CountryAdmin(admin.ModelAdmin):
+class CountryAdmin(TabbedTranslationAdmin):
     list_display = (
-        "name_ru",
+        "name",
         "id",
     )
 

@@ -46,13 +46,13 @@ class Universities(models.Model):
 
 class Country(models.Model):
     country_img = models.ImageField(upload_to="country/")
-    name_ru = models.CharField(max_length=256)
-    name_en = models.CharField(max_length=256, null=True, blank=True)
+    name = models.CharField(max_length=256)
+    short_name = models.CharField(max_length=256, null=True, blank=True)
     about_universities = models.TextField()
     advantages_universities = models.TextField()
 
     def __str__(self):
-        return self.name_ru
+        return self.name
 
 
 class Directions(models.Model):

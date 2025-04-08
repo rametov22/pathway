@@ -1,4 +1,5 @@
 from django.db.models.functions import Coalesce
+from django.utils.translation import gettext as _
 from django.db.models import Q, F, Count
 from django.shortcuts import get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
@@ -70,7 +71,7 @@ class UniversitiesSearchView(viewsets.ReadOnlyModelViewSet):
     serializer_class = UniversitiesSerializer
     filter_backends = [DjangoFilterBackend, filters.SearchFilter]
     filterset_class = UniversityFilter
-    search_fields = ["university_name", "country__name_ru", "country__name_en"]
+    search_fields = ["university_name", "country__name", "country__short_name"]
 
 
 # COUNTRIES
@@ -86,7 +87,7 @@ class CountryListView(generics.ListAPIView):
 
         if query:
             queryset = queryset.filter(
-                Q(name_ru__icontains=query) | Q(name_en__icontains=query)
+                Q(name__icontains=query) | Q(short_name__icontains=query)
             )
 
         return queryset
@@ -116,13 +117,13 @@ class StaticFilter(views.APIView):
     def get(self, request, *args, **kwargs):
         filters = {
             "year_of_study": [
-                {"value": 2, "label": "2-года"},
-                {"value": 4, "label": "4-года"},
+                {"value": 2, "label": _("2 года")},
+                {"value": 4, "label": _("4 года")},
             ],
             "is_state": [
-                {"value": "", "label": "Все"},
-                {"value": True, "label": "Государственный"},
-                {"value": False, "label": "Частный"},
+                {"value": "", "label": _("Все университеты")},
+                {"value": True, "label": _("Государственный университет")},
+                {"value": False, "label": _("Частный университет")},
             ],
             "direction": [
                 {"value": direction.id, "label": direction.direction}

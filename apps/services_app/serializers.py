@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.utils.translation import gettext as _
 from rest_framework import serializers
 from urllib.parse import urljoin
 from phonenumber_field.serializerfields import PhoneNumberField
@@ -86,26 +87,32 @@ class ConsultationRequestSerializer(serializers.ModelSerializer):
 
         if not is_authenticated:
             if not data.get("name"):
-                raise serializers.ValidationError({"name": "Это поле обязательно."})
+                raise serializers.ValidationError({"name": _("Это поле обязательно.")})
             if not data.get("phone_number"):
                 raise serializers.ValidationError(
-                    {"phone_number": "Это поле обязательно."}
+                    {"phone_number": _("Это поле обязательно.")}
                 )
             if not data.get("country_code"):
                 raise serializers.ValidationError(
-                    {"country_code": "Это поле обьязательно"}
+                    {"country_code": _("Это поле обьязательно")}
                 )
             if not data.get("country"):
-                raise serializers.ValidationError({"country": "Это поле обьязательно"})
+                raise serializers.ValidationError(
+                    {"country": _("Это поле обьязательно")}
+                )
 
         if "phone_number" in data and data["phone_number"]:
             if not data.get("country_code"):
                 raise serializers.ValidationError(
-                    {"country_code": "Это поле обязательно при вводе номера телефона."}
+                    {
+                        "country_code": _(
+                            "Это поле обязательно при вводе номера телефона."
+                        )
+                    }
                 )
             if not data.get("country"):
                 raise serializers.ValidationError(
-                    {"country": "Это поле обязательно при вводе номера телефона."}
+                    {"country": _("Это поле обязательно при вводе номера телефона.")}
                 )
 
             full_phone_number = f"{data['country_code']}{data['phone_number']}"
@@ -114,14 +121,14 @@ class ConsultationRequestSerializer(serializers.ModelSerializer):
                 parsed_phone = parse(full_phone_number, None)
                 if not is_valid_number(parsed_phone):
                     raise serializers.ValidationError(
-                        {"phone_number": "Некорректный номер телефона."}
+                        {"phone_number": _("Неверный номер телефона.")}
                     )
                 data["phone_number"] = format_number(
                     parsed_phone, PhoneNumberFormat.E164
                 )
             except NumberParseException:
                 raise serializers.ValidationError(
-                    {"phone_number": "Некорректный номер телефона."}
+                    {"phone_number": _("Неверный номер телефона.")}
                 )
 
         return data

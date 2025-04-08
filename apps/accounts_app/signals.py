@@ -38,10 +38,6 @@ def assign_new_default_application_to_users(sender, instance, created, **kwargs)
                     user=user, default_application=instance, deadline_date=deadline
                 )
 
-        print(
-            f"✅ Новая дефолтная заявка '{instance.title}' добавлена всем пользователям."
-        )
-
 
 @receiver(post_save, sender=UserApplication)
 def notify_user_on_application_status_change(sender, instance, **kwargs):
