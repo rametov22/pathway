@@ -10,6 +10,7 @@ from django.contrib.auth.hashers import make_password
 from rest_framework import serializers
 from rest_framework_simplejwt.tokens import RefreshToken
 from phonenumber_field.serializerfields import PhoneNumberField
+from django_countries.serializer_fields import CountryField
 
 from Inconnect.core import PyInconnect
 
@@ -349,6 +350,21 @@ class ProfileSerializer(serializers.ModelSerializer):
         )
 
 
+class CountryObjectField(serializers.CharField):
+    def to_representation(self, value):
+        if value:
+            return {
+                "code": value.code,
+                "name": value.name,
+            }
+        return None
+
+    def to_internal_value(self, data):
+        if isinstance(data, dict):
+            return data.get("code", "")
+        return data
+
+
 class ProfileUpdateSerializer(CountryFieldMixin, serializers.ModelSerializer):
     name = serializers.CharField(required=False)
     profile_picture = serializers.ImageField(required=False, allow_null=True)
@@ -356,7 +372,7 @@ class ProfileUpdateSerializer(CountryFieldMixin, serializers.ModelSerializer):
     # country_code = serializers.CharField(
     #     required=False, allow_blank=True, max_length=10
     # )
-    # country = serializers.CharField(required=False, allow_blank=True, max_length=10)
+    country = CountryObjectField(required=False, allow_null=True)
 
     class Meta:
         model = User
