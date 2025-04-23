@@ -501,7 +501,13 @@ class ApplicationDocumentUploadSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         application_id = validated_data.pop("application_id")
-        application = UserApplication.objects.get(id=application_id)
+
+        try:
+            application = UserApplication.objects.get(id=application_id)
+        except UserApplication.DoesNotExist:
+            raise serializers.ValidationError(
+                {"application_id": "Заявка с таким ID не найдена."}
+            )
 
         if application.status in ["in_progress", "approved"]:
             raise serializers.ValidationError(
