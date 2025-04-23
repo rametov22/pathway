@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-07 15:19+0500\n"
+"POT-Creation-Date: 2025-04-22 18:48+0500\n"
 "PO-Revision-Date: 2025-04-07 16:34+0500\n"
 "Last-Translator:   <pathwayadmin@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,92 +19,87 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Translated-Using: django-rosetta 0.10.2\n"
 
-#: .\apps\accounts_app\serializers.py:39
+#: .\apps\accounts_app\serializers.py:40
 msgid "Пароль должен быть длиной не менее 8 символов."
 msgstr "Parol kamida 8 ta belgidan iborat bo'lishi kerak."
 
-#: .\apps\accounts_app\serializers.py:51
-#: .\apps\accounts_app\serializers.py:324
+#: .\apps\accounts_app\serializers.py:52 .\apps\accounts_app\serializers.py:325
 msgid "Пароли не совпадают."
 msgstr "Parollar mos kelmayapti."
 
-#: .\apps\accounts_app\serializers.py:58
-#: .\apps\accounts_app\serializers.py:265
+#: .\apps\accounts_app\serializers.py:59 .\apps\accounts_app\serializers.py:266
 msgid "Пользователь с такой электронной почтой не найден."
 msgstr "Bu elektron pochta bilan foydalanuvchi topilmadi."
 
-#: .\apps\accounts_app\serializers.py:81
-#: .\apps\accounts_app\serializers.py:279
+#: .\apps\accounts_app\serializers.py:82 .\apps\accounts_app\serializers.py:280
 msgid "Восстановление пароля"
 msgstr "Parolni tiklash"
 
-#: .\apps\accounts_app\serializers.py:82
-#: .\apps\accounts_app\serializers.py:280
+#: .\apps\accounts_app\serializers.py:83 .\apps\accounts_app\serializers.py:281
 msgid "Ваш код для восстановления пароля:"
 msgstr "Parolni tiklash kodingiz:"
 
-#: .\apps\accounts_app\serializers.py:96
+#: .\apps\accounts_app\serializers.py:97
 msgid "Неверный код."
 msgstr "Yaroqsiz kod."
 
-#: .\apps\accounts_app\serializers.py:103
+#: .\apps\accounts_app\serializers.py:104
 msgid "Код подтвержден."
 msgstr "Kod tasdiqlandi."
 
-#: .\apps\accounts_app\serializers.py:120
-#: .\apps\accounts_app\serializers.py:122
-#: .\apps\accounts_app\serializers.py:125
-#: .\apps\services_app\serializers.py:90 .\apps\services_app\serializers.py:93
+#: .\apps\accounts_app\serializers.py:121
+#: .\apps\accounts_app\serializers.py:123
+#: .\apps\accounts_app\serializers.py:126 .\apps\services_app\serializers.py:90
+#: .\apps\services_app\serializers.py:93
 msgid "Это поле обязательно."
 msgstr "Ushbu qator to'ldirilishi shart."
 
-#: .\apps\accounts_app\serializers.py:208
+#: .\apps\accounts_app\serializers.py:209
 msgid "Регистрация заверщена."
 msgstr "Roʻyxatdan oʻtish tugallandi."
 
-#: .\apps\accounts_app\serializers.py:213
+#: .\apps\accounts_app\serializers.py:214
 msgid "Ответы сохранены."
 msgstr "Javoblar saqlandi."
 
-#: .\apps\accounts_app\serializers.py:224
+#: .\apps\accounts_app\serializers.py:225
 msgid "Password must be at least 8 characters long."
 msgstr "Parol kamida 8 ta belgidan iborat bo'lishi kerak."
 
-#: .\apps\accounts_app\serializers.py:237
+#: .\apps\accounts_app\serializers.py:238
 msgid "Invalid email"
 msgstr "Yaroqsiz email"
 
-#: .\apps\accounts_app\serializers.py:241
+#: .\apps\accounts_app\serializers.py:242
 msgid "Пользователь с такой электронной почтой не существует. "
 msgstr "Bu elektron pochta bilan foydalanuvchi mavjud emas."
 
-#: .\apps\accounts_app\serializers.py:245
+#: .\apps\accounts_app\serializers.py:246
 msgid "Invalid password"
 msgstr "Yaroqsiz parol"
 
-#: .\apps\accounts_app\serializers.py:284
+#: .\apps\accounts_app\serializers.py:285
 msgid "Код восстановления отправлен на электронную почту."
 msgstr "Tiklash kodi elektron pochta orqali yuborildi."
 
-#: .\apps\accounts_app\serializers.py:299
+#: .\apps\accounts_app\serializers.py:300
 msgid "Пользователь не найден"
 msgstr "Bunday foydalanuvchi topilmadi"
 
-#: .\apps\accounts_app\serializers.py:301
+#: .\apps\accounts_app\serializers.py:302
 msgid "Код не совпадает"
 msgstr "Kod mos emas"
 
-#: .\apps\accounts_app\serializers.py:309
+#: .\apps\accounts_app\serializers.py:310
 msgid "Код подтверждён. Установите новый пароль."
 msgstr "Kod tasdiqlandi. Yangi parol o'rnating."
 
-#: .\apps\accounts_app\serializers.py:334
+#: .\apps\accounts_app\serializers.py:335
 msgid "Пароль успешно изменён. Теперь вы можете войти в свою учётную запись."
 msgstr ""
-"Parol muvaffaqiyatli o'zgartirildi. Endi siz hisobingizga kirishingiz "
-"mumkin."
+"Parol muvaffaqiyatli o'zgartirildi. Endi siz hisobingizga kirishingiz mumkin."
 
-#: .\apps\accounts_app\serializers.py:494
+#: .\apps\accounts_app\serializers.py:510
 msgid "Нельзя загружать файлы для этой заявки — вы уже их загрузили."
 msgstr "Bu arizaga fayllarni yuklash mumkin emas — ular allaqachon yuklangan."
 
@@ -128,8 +123,7 @@ msgstr "Hisob muvaffaqiyatli o'chirildi"
 msgid "Документ успешно удалён"
 msgstr "Hujjat muvaffaqiyatli o'chirildi"
 
-#: .\apps\services_app\serializers.py:97
-#: .\apps\services_app\serializers.py:101
+#: .\apps\services_app\serializers.py:97 .\apps\services_app\serializers.py:101
 msgid "Это поле обьязательно"
 msgstr "Ushbu qator to'ldirilishi shart"
 
@@ -180,3 +174,813 @@ msgstr "Davlat universiteti"
 #: .\apps\universities_app\views.py:126
 msgid "Частный университет"
 msgstr "Xususiy universitet"
+
+#~ msgid "Brunei"
+#~ msgstr "Bruney"
+
+#~ msgid "Bolivia"
+#~ msgstr "Boliviya"
+
+#~ msgid "United Kingdom"
+#~ msgstr "Birlashgan Qirollik"
+
+#~ msgid "Iran"
+#~ msgstr "Eron"
+
+#~ msgid "North Korea"
+#~ msgstr "Shimoliy Koreya"
+
+#~ msgid "South Korea"
+#~ msgstr "Janubiy Koreya"
+
+#~ msgid "Laos"
+#~ msgstr "Laos"
+
+#~ msgid "Moldova"
+#~ msgstr "Moldova"
+
+#~ msgid "Russia"
+#~ msgstr "Rossiya"
+
+#~ msgid "Syria"
+#~ msgstr "Suriya"
+
+#~ msgid "Taiwan"
+#~ msgstr "Tayvan"
+
+#~ msgid "Tanzania"
+#~ msgstr "Tanzaniya"
+
+#~ msgid "Venezuela"
+#~ msgstr "Venesuela"
+
+#~ msgid "Vietnam"
+#~ msgstr "Vyetnam"
+
+#~ msgid "Czech Republic"
+#~ msgstr "Chexiya Respublikasi"
+
+#~ msgid "Macedonia"
+#~ msgstr "Makedoniya"
+
+#~ msgid "Macedonia (the former Yugoslav Republic of)"
+#~ msgstr "Makedoniya (sobiq Yugoslaviya Respublikasi)"
+
+#~ msgid "Swaziland"
+#~ msgstr "Svazilend"
+
+#~ msgid "Tanzania, the United Republic of"
+#~ msgstr "Tanzaniya, Birlashgan Respublikasi"
+
+#~ msgid "Falkland Islands  [Malvinas]"
+#~ msgstr "Folklend orollari [Malvinas]"
+
+#~ msgid "Afghanistan"
+#~ msgstr "Afg'oniston"
+
+#~ msgid "Åland Islands"
+#~ msgstr "Oland orollari"
+
+#~ msgid "Albania"
+#~ msgstr "Albaniya"
+
+#~ msgid "Algeria"
+#~ msgstr "Jazoir"
+
+#~ msgid "American Samoa"
+#~ msgstr "Amerika Samoasi"
+
+#~ msgid "Andorra"
+#~ msgstr "Andorra"
+
+#~ msgid "Angola"
+#~ msgstr "Angola"
+
+#~ msgid "Anguilla"
+#~ msgstr "Angilya"
+
+#~ msgid "Antarctica"
+#~ msgstr "Antarktida"
+
+#~ msgid "Antigua and Barbuda"
+#~ msgstr "Antigua va Barbuda"
+
+#~ msgid "Argentina"
+#~ msgstr "Argentina"
+
+#~ msgid "Armenia"
+#~ msgstr "Armaniston"
+
+#~ msgid "Aruba"
+#~ msgstr "Aruba"
+
+#~ msgid "Australia"
+#~ msgstr "Avstraliya"
+
+#~ msgid "Austria"
+#~ msgstr "Avstriya"
+
+#~ msgid "Azerbaijan"
+#~ msgstr "Ozarbayjon"
+
+#~ msgid "Bahamas"
+#~ msgstr "Bagama orollari"
+
+#~ msgid "Bahrain"
+#~ msgstr "Bahrayn"
+
+#~ msgid "Bangladesh"
+#~ msgstr "Bangladesh"
+
+#~ msgid "Barbados"
+#~ msgstr "Barbados"
+
+#~ msgid "Belarus"
+#~ msgstr "Belarus"
+
+#~ msgid "Belgium"
+#~ msgstr "Belgiya"
+
+#~ msgid "Belize"
+#~ msgstr "Beliz"
+
+#~ msgid "Benin"
+#~ msgstr "Benin "
+
+#~ msgid "Bermuda"
+#~ msgstr "Bermuda"
+
+#~ msgid "Bhutan"
+#~ msgstr "Butan"
+
+#~ msgid "Bolivia (Plurinational State of)"
+#~ msgstr "Boliviya (Ko‘p millatli davlat)"
+
+#~ msgid "Bonaire, Sint Eustatius and Saba"
+#~ msgstr "Bonayre, Sint-Eystatius va Saba"
+
+#~ msgid "Bosnia and Herzegovina"
+#~ msgstr "Bosniya va Gertsegovina"
+
+#~ msgid "Botswana"
+#~ msgstr "Botsvana"
+
+#~ msgid "Bouvet Island"
+#~ msgstr "Buve oroli"
+
+#~ msgid "Brazil"
+#~ msgstr "Braziliya"
+
+#~ msgid "British Indian Ocean Territory"
+#~ msgstr "Britaniya Hind Okeani Hududi"
+
+#~ msgid "Brunei Darussalam"
+#~ msgstr "Bruney Darussalom"
+
+#~ msgid "Bulgaria"
+#~ msgstr "Bolgariya"
+
+#~ msgid "Burkina Faso"
+#~ msgstr "Burkina-Faso"
+
+#~ msgid "Burundi"
+#~ msgstr "Burundi"
+
+#~ msgid "Cabo Verde"
+#~ msgstr "Kabo-Verde"
+
+#~ msgid "Cambodia"
+#~ msgstr "Kambodja"
+
+#~ msgid "Cameroon"
+#~ msgstr "Kamerun"
+
+#~ msgid "Canada"
+#~ msgstr "Kanada"
+
+#~ msgid "Cayman Islands"
+#~ msgstr "Kayman orollari"
+
+#~ msgid "Central African Republic"
+#~ msgstr "Markaziy Afrika Respublikasi"
+
+#~ msgid "Chad"
+#~ msgstr "Chad"
+
+#~ msgid "Chile"
+#~ msgstr "Chili"
+
+#~ msgid "China"
+#~ msgstr "Xitoy"
+
+#~ msgid "Christmas Island"
+#~ msgstr "Rojdestvo oroli"
+
+#~ msgid "Cocos (Keeling) Islands"
+#~ msgstr "Kokos (Kiling) orollari"
+
+#~ msgid "Colombia"
+#~ msgstr "Kolumbiya"
+
+#~ msgid "Comoros"
+#~ msgstr "Komor orollari"
+
+#~ msgid "Congo"
+#~ msgstr "Kongo"
+
+#~ msgid "Congo (the Democratic Republic of the)"
+#~ msgstr "Kongo (Demokratik Respublikasi)"
+
+#~ msgid "Cook Islands"
+#~ msgstr "Kuk orollari"
+
+#~ msgid "Costa Rica"
+#~ msgstr "Kosta-Rika"
+
+#~ msgid "Côte d'Ivoire"
+#~ msgstr "Kot-d’Ivuar"
+
+#~ msgid "Croatia"
+#~ msgstr "Xorvatiya"
+
+#~ msgid "Cuba"
+#~ msgstr "Kuba"
+
+#~ msgid "Curaçao"
+#~ msgstr "Kurasao"
+
+#~ msgid "Cyprus"
+#~ msgstr "Kipr"
+
+#~ msgid "Czechia"
+#~ msgstr "Chexiya"
+
+#~ msgid "Denmark"
+#~ msgstr "Daniya"
+
+#~ msgid "Djibouti"
+#~ msgstr "Jibuti"
+
+#~ msgid "Dominica"
+#~ msgstr "Dominika"
+
+#~ msgid "Dominican Republic"
+#~ msgstr "Dominikan Respublikasi"
+
+#~ msgid "Ecuador"
+#~ msgstr "Ekvador"
+
+#~ msgid "Egypt"
+#~ msgstr "Misr"
+
+#~ msgid "El Salvador"
+#~ msgstr "El-Salvador"
+
+#~ msgid "Equatorial Guinea"
+#~ msgstr "Ekvatorial Gvineya"
+
+#~ msgid "Eritrea"
+#~ msgstr "Eritreya"
+
+#~ msgid "Estonia"
+#~ msgstr "Estoniya"
+
+#~ msgid "Eswatini"
+#~ msgstr "Esvatini"
+
+#~ msgid "Ethiopia"
+#~ msgstr "Efiopiya"
+
+#~ msgid "Falkland Islands (Malvinas)"
+#~ msgstr "Folklend orollari (Malvinas)"
+
+#~ msgid "Faroe Islands"
+#~ msgstr "Farer orollari"
+
+#~ msgid "Fiji"
+#~ msgstr "Fidji"
+
+#~ msgid "Finland"
+#~ msgstr "Finlyandiya"
+
+#~ msgid "France"
+#~ msgstr "Frantsiya"
+
+#~ msgid "French Guiana"
+#~ msgstr "Fransuz Gvianasi"
+
+#~ msgid "French Polynesia"
+#~ msgstr "Fransuz Polineziyasi"
+
+#~ msgid "French Southern Territories"
+#~ msgstr "Fransiyaning Janubiy Hududlari"
+
+#~ msgid "Gabon"
+#~ msgstr "Gabon"
+
+#~ msgid "Gambia"
+#~ msgstr "Gambiya"
+
+#~ msgid "Georgia"
+#~ msgstr "Gruziya"
+
+#~ msgid "Germany"
+#~ msgstr "Germaniya"
+
+#~ msgid "Ghana"
+#~ msgstr "Gana"
+
+#~ msgid "Gibraltar"
+#~ msgstr "Gibraltar"
+
+#~ msgid "Greece"
+#~ msgstr "Gretsiya"
+
+#~ msgid "Greenland"
+#~ msgstr "Grenlandiya"
+
+#~ msgid "Grenada"
+#~ msgstr "Grenada"
+
+#~ msgid "Guadeloupe"
+#~ msgstr "Gvadelupa"
+
+#~ msgid "Guam"
+#~ msgstr "Guam"
+
+#~ msgid "Guatemala"
+#~ msgstr "Gvatemala"
+
+#~ msgid "Guernsey"
+#~ msgstr "Gernsi"
+
+#~ msgid "Guinea"
+#~ msgstr "Gvineya"
+
+#~ msgid "Guinea-Bissau"
+#~ msgstr "Gvineya-Bisau"
+
+#~ msgid "Guyana"
+#~ msgstr "Gayana"
+
+#~ msgid "Haiti"
+#~ msgstr "Gaiti"
+
+#~ msgid "Heard Island and McDonald Islands"
+#~ msgstr "Xerd va Makdonald orollari"
+
+#~ msgid "Holy See"
+#~ msgstr "Muqaddas Taxt (Vatikan)"
+
+#~ msgid "Honduras"
+#~ msgstr "Gonduras"
+
+#~ msgid "Hong Kong"
+#~ msgstr "Gonkong"
+
+#~ msgid "Hungary"
+#~ msgstr "Vengriya"
+
+#~ msgid "Iceland"
+#~ msgstr "Islandiya"
+
+#~ msgid "India"
+#~ msgstr "Hindiston"
+
+#~ msgid "Indonesia"
+#~ msgstr "Indoneziya"
+
+#~ msgid "Iran (Islamic Republic of)"
+#~ msgstr "Eron (Islom Respublikasi)"
+
+#~ msgid "Iraq"
+#~ msgstr "Iroq"
+
+#~ msgid "Ireland"
+#~ msgstr "Irlandiya"
+
+#~ msgid "Isle of Man"
+#~ msgstr "Men oroli"
+
+#~ msgid "Israel"
+#~ msgstr "Isroil"
+
+#~ msgid "Italy"
+#~ msgstr "Italiya"
+
+#~ msgid "Jamaica"
+#~ msgstr "Yamayka"
+
+#~ msgid "Japan"
+#~ msgstr "Yaponiya"
+
+#~ msgid "Jersey"
+#~ msgstr "Jersi"
+
+#~ msgid "Jordan"
+#~ msgstr "Iordaniya"
+
+#~ msgid "Kazakhstan"
+#~ msgstr "Qozog‘iston"
+
+#~ msgid "Kenya"
+#~ msgstr "Keniya"
+
+#~ msgid "Kiribati"
+#~ msgstr "Kiribati"
+
+#~ msgid "Korea (the Democratic People's Republic of)"
+#~ msgstr "Koreya (Demokratik Xalq Respublikasi) — Shimoliy Koreya"
+
+#~ msgid "Korea (the Republic of)"
+#~ msgstr "Koreya (Respublikasi) — Janubiy Koreya"
+
+#~ msgid "Kuwait"
+#~ msgstr "Quvayt"
+
+#~ msgid "Kyrgyzstan"
+#~ msgstr "Qirg‘iziston"
+
+#~ msgid "Lao People's Democratic Republic"
+#~ msgstr "Laos Xalq Demokratik Respublikasi"
+
+#~ msgid "Latvia"
+#~ msgstr "Latviya"
+
+#~ msgid "Lebanon"
+#~ msgstr "Livan"
+
+#~ msgid "Lesotho"
+#~ msgstr "Lesoto"
+
+#~ msgid "Liberia"
+#~ msgstr "Liberiya"
+
+#~ msgid "Libya"
+#~ msgstr "Liviya"
+
+#~ msgid "Liechtenstein"
+#~ msgstr "Lixtenshteyn"
+
+#~ msgid "Lithuania"
+#~ msgstr "Litva"
+
+#~ msgid "Luxembourg"
+#~ msgstr "Lyuksemburg"
+
+#~ msgid "Macao"
+#~ msgstr "Makao"
+
+#~ msgid "Madagascar"
+#~ msgstr "Madagaskar"
+
+#~ msgid "Malawi"
+#~ msgstr "Malavi"
+
+#~ msgid "Malaysia"
+#~ msgstr "Malayziya"
+
+#~ msgid "Maldives"
+#~ msgstr "Maldiv orollari"
+
+#~ msgid "Mali"
+#~ msgstr "Mali"
+
+#~ msgid "Malta"
+#~ msgstr "Malta"
+
+#~ msgid "Marshall Islands"
+#~ msgstr "Marshall orollari"
+
+#~ msgid "Martinique"
+#~ msgstr "Martinika"
+
+#~ msgid "Mauritania"
+#~ msgstr "Mavritaniya"
+
+#~ msgid "Mauritius"
+#~ msgstr "Mavrikiy"
+
+#~ msgid "Mayotte"
+#~ msgstr "Mayotta"
+
+#~ msgid "Mexico"
+#~ msgstr "Meksika"
+
+#~ msgid "Micronesia (Federated States of)"
+#~ msgstr "Mikroneziya (Federativ shtatlar)"
+
+#~ msgid "Moldova (the Republic of)"
+#~ msgstr "Moldova (Respublikasi)"
+
+#~ msgid "Monaco"
+#~ msgstr "Monako"
+
+#~ msgid "Mongolia"
+#~ msgstr "Mongoliya"
+
+#~ msgid "Montenegro"
+#~ msgstr "Chernogoriya"
+
+#~ msgid "Montserrat"
+#~ msgstr "Montserrat"
+
+#~ msgid "Morocco"
+#~ msgstr "Marokash"
+
+#~ msgid "Mozambique"
+#~ msgstr "Mozambik"
+
+#~ msgid "Myanmar"
+#~ msgstr "Myanma"
+
+#~ msgid "Namibia"
+#~ msgstr "Namibiya"
+
+#~ msgid "Nauru"
+#~ msgstr "Nauru"
+
+#~ msgid "Nepal"
+#~ msgstr "Nepal"
+
+#~ msgid "Netherlands"
+#~ msgstr "Niderlandiya"
+
+#~ msgid "New Caledonia"
+#~ msgstr "Yangi Kaledoniya"
+
+#~ msgid "New Zealand"
+#~ msgstr "Yangi Zelandiya"
+
+#~ msgid "Nicaragua"
+#~ msgstr "Nikaragua"
+
+#~ msgid "Niger"
+#~ msgstr "Niger"
+
+#~ msgid "Nigeria"
+#~ msgstr "Nigeriya"
+
+#~ msgid "Niue"
+#~ msgstr "Niuye"
+
+#~ msgid "Norfolk Island"
+#~ msgstr "Norfolk oroli"
+
+#~ msgid "North Macedonia"
+#~ msgstr "Shimoliy Makedoniya"
+
+#~ msgid "Northern Mariana Islands"
+#~ msgstr "Shimoliy Mariana orollari"
+
+#~ msgid "Norway"
+#~ msgstr "Norvegiya"
+
+#~ msgid "Oman"
+#~ msgstr "Ummon"
+
+#~ msgid "Pakistan"
+#~ msgstr "Pokiston"
+
+#~ msgid "Palau"
+#~ msgstr "Palau"
+
+#~ msgid "Palestine, State of"
+#~ msgstr "Falastin Davlati"
+
+#~ msgid "Panama"
+#~ msgstr "Panama"
+
+#~ msgid "Papua New Guinea"
+#~ msgstr "Papua-Yangi Gvineya"
+
+#~ msgid "Paraguay"
+#~ msgstr "Paragvay"
+
+#~ msgid "Peru"
+#~ msgstr "Peru"
+
+#~ msgid "Philippines"
+#~ msgstr "Filippin"
+
+#~ msgid "Pitcairn"
+#~ msgstr "Pitkern orollari"
+
+#~ msgid "Poland"
+#~ msgstr "Polsha"
+
+#~ msgid "Portugal"
+#~ msgstr "Portugaliya"
+
+#~ msgid "Puerto Rico"
+#~ msgstr "Puerto-Riko"
+
+#~ msgid "Qatar"
+#~ msgstr "Qatar"
+
+#~ msgid "Réunion"
+#~ msgstr "Reyunion"
+
+#~ msgid "Romania"
+#~ msgstr "Ruminiya"
+
+#~ msgid "Russian Federation"
+#~ msgstr "Rossiya Federatsiyasi"
+
+#~ msgid "Rwanda"
+#~ msgstr "Ruanda"
+
+#~ msgid "Saint Barthélemy"
+#~ msgstr "Sen-Bartelemi"
+
+#~ msgid "Saint Helena, Ascension and Tristan da Cunha"
+#~ msgstr "Muqaddas Yelena, Asensiyon va Tristan-da-Kunya"
+
+#~ msgid "Saint Kitts and Nevis"
+#~ msgstr "Sen-Kits va Nevis"
+
+#~ msgid "Saint Lucia"
+#~ msgstr "Sen-Lyusiya"
+
+#~ msgid "Saint Martin (French part)"
+#~ msgstr "Sen-Marten (Fransiya qismi)"
+
+#~ msgid "Saint Pierre and Miquelon"
+#~ msgstr "Sen-Pyer va Mikelon"
+
+#~ msgid "Saint Vincent and the Grenadines"
+#~ msgstr "Sen-Vinsent va Grenadin orollari"
+
+#~ msgid "Samoa"
+#~ msgstr "Samoa"
+
+#~ msgid "San Marino"
+#~ msgstr "San-Marino"
+
+#~ msgid "Sao Tome and Principe"
+#~ msgstr "San-Tome va Prinsipi"
+
+#~ msgid "Saudi Arabia"
+#~ msgstr "Saudiya Arabistoni"
+
+#~ msgid "Senegal"
+#~ msgstr "Senegal"
+
+#~ msgid "Serbia"
+#~ msgstr "Serbiya"
+
+#~ msgid "Seychelles"
+#~ msgstr "Seyshel orollari"
+
+#~ msgid "Sierra Leone"
+#~ msgstr "Sierra-Leone"
+
+#~ msgid "Singapore"
+#~ msgstr "Singapur"
+
+#~ msgid "Sint Maarten (Dutch part)"
+#~ msgstr "Sint-Marten (Gollandiya qismi)"
+
+#~ msgid "Slovakia"
+#~ msgstr "Slovakiya"
+
+#~ msgid "Slovenia"
+#~ msgstr "Sloveniya"
+
+#~ msgid "Solomon Islands"
+#~ msgstr "Solomon orollari"
+
+#~ msgid "Somalia"
+#~ msgstr "Somali"
+
+#~ msgid "South Africa"
+#~ msgstr "Janubiy Afrika"
+
+#~ msgid "South Georgia and the South Sandwich Islands"
+#~ msgstr "Janubiy Georgiya va Janubiy Sendvich orollari"
+
+#~ msgid "South Sudan"
+#~ msgstr "Janubiy Sudan"
+
+#~ msgid "Spain"
+#~ msgstr "Ispaniya"
+
+#~ msgid "Sri Lanka"
+#~ msgstr "Shri-Lanka"
+
+#~ msgid "Sudan"
+#~ msgstr "Sudan"
+
+#~ msgid "Suriname"
+#~ msgstr "Surinam"
+
+#~ msgid "Svalbard and Jan Mayen"
+#~ msgstr "Shvalbard va Yan-Mayen"
+
+#~ msgid "Sweden"
+#~ msgstr "Shvetsiya"
+
+#~ msgid "Switzerland"
+#~ msgstr "Shveytsariya"
+
+#~ msgid "Syrian Arab Republic"
+#~ msgstr "Suriya Arab Respublikasi"
+
+#~ msgid "Taiwan (Province of China)"
+#~ msgstr "Tayvan (Xitoy provinsiyasi)"
+
+#~ msgid "Tajikistan"
+#~ msgstr "Tojikiston"
+
+#~ msgid "Thailand"
+#~ msgstr "Tailand"
+
+#~ msgid "Timor-Leste"
+#~ msgstr "Sharqiy Timor"
+
+#~ msgid "Togo"
+#~ msgstr "Togo"
+
+#~ msgid "Tokelau"
+#~ msgstr "Tokelau"
+
+#~ msgid "Tonga"
+#~ msgstr "Tonga"
+
+#~ msgid "Trinidad and Tobago"
+#~ msgstr "Trinidad va Tobago"
+
+#~ msgid "Tunisia"
+#~ msgstr "Tunis"
+
+#~ msgid "Türkiye"
+#~ msgstr "Turkiya"
+
+#~ msgid "Turkmenistan"
+#~ msgstr "Turkmaniston"
+
+#~ msgid "Turks and Caicos Islands"
+#~ msgstr "Turks va Kaykos orollari"
+
+#~ msgid "Tuvalu"
+#~ msgstr "Tuvalu"
+
+#~ msgid "Uganda"
+#~ msgstr "Uganda"
+
+#~ msgid "Ukraine"
+#~ msgstr "Ukraina"
+
+#~ msgid "United Arab Emirates"
+#~ msgstr "Birlashgan Arab Amirliklari"
+
+#~ msgid "United Kingdom of Great Britain and Northern Ireland"
+#~ msgstr "Buyuk Britaniya va Shimoliy Irlandiya Birlashgan Qirolligi"
+
+#~ msgid "United States Minor Outlying Islands"
+#~ msgstr "AQShning Kichik Tashqi orollari"
+
+#~ msgid "United States of America"
+#~ msgstr "Amerika Qo‘shma Shtatlari"
+
+#~ msgid "Uruguay"
+#~ msgstr "Urugvay"
+
+#~ msgid "Uzbekistan"
+#~ msgstr "O‘zbekiston"
+
+#~ msgid "Vanuatu"
+#~ msgstr "Vanuatu"
+
+#~ msgid "Venezuela (Bolivarian Republic of)"
+#~ msgstr "Venesuela (Bolivar Respublikasi)"
+
+#~ msgid "Viet Nam"
+#~ msgstr "Vyetnam"
+
+#~ msgid "Virgin Islands (British)"
+#~ msgstr "Virgin orollari (Britaniya)"
+
+#~ msgid "Virgin Islands (U.S.)"
+#~ msgstr "Virgin orollari (AQSh)"
+
+#~ msgid "Wallis and Futuna"
+#~ msgstr "Vallis va Futuna"
+
+#~ msgid "Western Sahara"
+#~ msgstr "G‘arbiy Sahara"
+
+#~ msgid "Yemen"
+#~ msgstr "Yaman"
+
+#~ msgid "Zambia"
+#~ msgstr "Zambiya"
+
+#~ msgid "Zimbabwe"
+#~ msgstr "Zimbabve"
+
+#~ msgid "Country"
+#~ msgstr "Давлат (умумий сўз, махсус ном эмас)"
+
+#~ msgid "All"
+#~ msgstr "Барчаси / Ҳаммаси"

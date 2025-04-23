@@ -139,6 +139,7 @@ class UserApplicationAdmin(admin.ModelAdmin):
         "user",
         "default_application",
         "status",
+        "id",
     )
     list_filter = (
         "status",
