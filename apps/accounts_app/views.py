@@ -11,6 +11,7 @@ from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework_simplejwt.tokens import RefreshToken
 from google.oauth2 import id_token
 from google.auth.transport import requests
+from django.utils import translation
 
 from .models import User, UserApplication, UserDocument, ApplicationDocument
 from .serializers import *
@@ -321,17 +322,12 @@ class HomeProgressView(views.APIView):
             else 0
         )
 
-        applications = (
-            UserApplication.objects.filter(user=user)
-            .annotate(default_application_title=F("default_application__title"))
-            .values(
-                "id",
-                "default_application_title",
-                "status",
-                "deadline_date",
-            )
-            .order_by("deadline_date")
+        applications_qs = (
+            UserApplication.objects.filter(user=user).order_by("deadline_date")
         )[:2]
+        applications = HomeProgressSerializer(
+            applications_qs, many=True, context={"request": request}
+        ).data
 
         return Response(
             {

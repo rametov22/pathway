@@ -472,6 +472,16 @@ class ApplicationDocumentSerializer(serializers.ModelSerializer):
         return None
 
 
+class HomeProgressSerializer(serializers.ModelSerializer):
+    default_application_title = serializers.CharField(
+        source="default_application.title"
+    )
+
+    class Meta:
+        model = UserApplication
+        fields = ["id", "default_application_title", "status", "deadline_date"]
+
+
 class UserApplicationSerializer(serializers.ModelSerializer):
     default_application_title = serializers.CharField(
         source="default_application.title"
