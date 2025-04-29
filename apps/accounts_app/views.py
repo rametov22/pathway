@@ -12,6 +12,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from google.oauth2 import id_token
 from google.auth.transport import requests
 from django.utils import translation
+from dateutil import parser
 
 from .models import User, UserApplication, UserDocument, ApplicationDocument
 from .serializers import *
@@ -388,25 +389,23 @@ class ProfileProgressDetailView(views.APIView):
             else 0
         )
 
-        applications = (
-            UserApplication.objects.filter(user=user)
-            .annotate(default_application_title=F("default_application__title"))
-            .values(
-                "id",
-                "default_application_title",
-                "status",
-                "deadline_date",
-            )
-            .order_by("deadline_date")
+        applications_qs = UserApplication.objects.filter(user=user).order_by(
+            "deadline_date"
         )
+        applications = HomeProgressSerializer(
+            applications_qs, many=True, context={"request": request}
+        ).data
 
         grouped_applications = defaultdict(list)
         for app in applications:
-            date_str = (
-                app["deadline_date"].strftime("%d %B %Y")
-                if app["deadline_date"]
-                else "Без даты"
-            )
+            date_str = "Без даты"
+            if app["deadline_date"]:
+                try:
+                    deadline = parser.parse(app["deadline_date"])
+                    date_str = deadline.strftime("%d %B %Y")
+                except (ValueError, TypeError):
+                    pass
+
             grouped_applications[date_str].append(app)
 
         response_data = [
