@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.db import models
-from modeltranslation.admin import TabbedTranslationAdmin
+from modeltranslation.admin import TabbedTranslationAdmin, TranslationAdmin
 from mdeditor.widgets import MDEditorWidget
 from rangefilter.filters import DateRangeFilterBuilder
 
@@ -8,7 +8,7 @@ from .models import *
 
 
 @admin.register(Service)
-class ServiceAdmin(TabbedTranslationAdmin):
+class ServiceAdmin(TranslationAdmin):
     formfield_overrides = {models.TextField: {"widget": MDEditorWidget}}
     filter_horizontal = ("experts",)
 

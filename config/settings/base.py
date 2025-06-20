@@ -90,8 +90,8 @@ TEMPLATES = [
 
 MDEDITOR_CONFIGS = {
     "default": {
-        "width": "90% ",  # Custom edit box width
-        "height": 500,  # Custom edit box height
+        "width": "100% ",
+        "height": 500,
         "toolbar": [
             "undo",
             "redo",
@@ -133,7 +133,7 @@ MDEDITOR_CONFIGS = {
             "preview",
             "watch",
             "fullscreen",
-        ],  # custom edit box toolbar
+        ],
         "upload_image_formats": [
             "jpg",
             "jpeg",
@@ -141,21 +141,21 @@ MDEDITOR_CONFIGS = {
             "png",
             "bmp",
             "webp",
-        ],  # image upload format type
-        "image_folder": "editor",  # image save the folder name
-        "theme": "default",  # edit box theme, dark / default
-        "preview_theme": "default",  # Preview area theme, dark / default
-        "editor_theme": "default",  # edit area theme, pastel-on-dark / default
-        "toolbar_autofixed": True,  # Whether the toolbar capitals
-        "search_replace": True,  # Whether to open the search for replacement
-        "emoji": True,  # whether to open the expression function
-        "tex": True,  # whether to open the tex chart function
-        "flow_chart": True,  # whether to open the flow chart function
-        "sequence": True,  # Whether to open the sequence diagram function
-        "watch": True,  # Live preview
-        "lineWrapping": False,  # lineWrapping
-        "lineNumbers": False,  # lineNumbers
-        "language": "en",  # zh / en / es
+        ],
+        "image_folder": "editor",
+        "theme": "default",
+        "preview_theme": "default",
+        "editor_theme": "default",
+        "toolbar_autofixed": True,
+        "search_replace": True,
+        "emoji": True,
+        "tex": True,
+        "flow_chart": True,
+        "sequence": True,
+        "watch": True,
+        "lineWrapping": False,
+        "lineNumbers": False,
+        "language": "en",
     }
 }
 
