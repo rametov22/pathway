@@ -23,5 +23,8 @@ class CountryAdmin(TabbedTranslationAdmin):
 
 
 @admin.register(Directions)
-class DirectionsAdmin(admin.ModelAdmin):
-    pass
+class DirectionsAdmin(TabbedTranslationAdmin):
+    list_display = (
+        "direction",
+        "id",
+    )
