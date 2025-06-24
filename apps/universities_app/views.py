@@ -51,13 +51,16 @@ class UniversitiesHomeView(generics.ListAPIView):
     serializer_class = UniversitiesSerializer
 
     def get_queryset(self):
-        queryset = (
-            Universities.objects.annotate(
-                ranking_qs=Coalesce(F("rating_qs"), 9999),
-                ranking_the=Coalesce(F("rating_the"), 9999),
-            )
-            .order_by("rating_qs", "rating_the")
-            .select_related("country")[:4]
+        # queryset = (
+        #     Universities.objects.annotate(
+        #         ranking_qs=Coalesce(F("rating_qs"), 9999),
+        #         ranking_the=Coalesce(F("rating_the"), 9999),
+        #     )
+        #     .order_by("rating_qs", "rating_the")
+        #     .select_related("country")[:4]
+        # )
+        queryset = Universities.objects.select_related("country").order_by(
+            "university_name"
         )
         return queryset
 
@@ -84,16 +87,45 @@ class CountryListView(generics.ListAPIView):
     def get_queryset(self):
         query = self.request.GET.get("search", "").strip()
 
-        queryset = Country.objects.annotate(
+        base_queryset = Country.objects.annotate(
             universities_count=Count("universities")
-        ).order_by("name")
+        )
+
+        with_manual = []
+        without_manual = []
+
+        for country in base_queryset:
+            if country.manual_order > 0:
+                with_manual.append(country)
+            else:
+                without_manual.append(country)
+
+        without_manual.sort(key=lambda c: c.name.lower())
+
+        for country in sorted(with_manual, key=lambda x: x.manual_order):
+            index = country.manual_order - 1
+            index = max(0, min(index, len(without_manual)))
+            without_manual.insert(index, country)
 
         if query:
-            queryset = queryset.filter(
-                Q(name__icontains=query) | Q(short_name__icontains=query)
+            filtered = filter(
+                lambda c: query.lower() in c.name.lower()
+                or (c.short_name and query.lower() in c.short_name.lower()),
+                without_manual,
             )
+            return list(filtered)
 
-        return queryset
+        return without_manual
+        # queryset = Country.objects.annotate(
+        #     universities_count=Count("universities")
+        # ).order_by("name")
+
+        # if query:
+        #     queryset = queryset.filter(
+        #         Q(name__icontains=query) | Q(short_name__icontains=query)
+        #     )
+
+        # return queryset
 
 
 class CountryHomeView(generics.ListAPIView):

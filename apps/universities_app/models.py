@@ -57,6 +57,9 @@ class Country(models.Model):
     short_name = models.CharField(max_length=256, null=True, blank=True)
     about_universities = models.TextField()
     advantages_universities = models.TextField()
+    manual_order = models.PositiveIntegerField(
+        default=0, verbose_name="Позиция в списке"
+    )
 
     def __str__(self):
         return self.name

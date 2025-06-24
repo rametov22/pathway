@@ -18,8 +18,10 @@ class UniversitiesAdmin(TabbedTranslationAdmin):
 class CountryAdmin(TabbedTranslationAdmin):
     list_display = (
         "name",
+        "manual_order",
         "id",
     )
+    list_editable = ("manual_order",)
 
 
 @admin.register(Directions)
