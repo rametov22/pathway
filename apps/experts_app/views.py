@@ -17,7 +17,7 @@ class ExpertListView(generics.ListAPIView):
     def get_queryset(self):
         query = self.request.GET.get("search", "").strip()
 
-        queryset = Expert.objects.all()
+        queryset = Expert.objects.all().order_by("name")
 
         if query:
             queryset = queryset.filter(name__icontains=query)
@@ -29,7 +29,7 @@ class ExpertHomeView(generics.ListAPIView):
     serializer_class = ExpertsSerializer
 
     def get_queryset(self):
-        queryset = Expert.objects.all()[:6]
+        queryset = Expert.objects.all().order_by("name")[:6]
         return queryset
 
 

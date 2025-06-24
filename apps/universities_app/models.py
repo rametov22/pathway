@@ -35,9 +35,16 @@ class Universities(models.Model):
     international_students_count = models.IntegerField(
         verbose_name="Количество иностранных студентов"
     )
-    number_of_grants = models.IntegerField(verbose_name="Количество грантов в проценте")
+    acceptance_rate = models.DecimalField(
+        max_digits=5,
+        decimal_places=2,
+        null=True,
+        blank=True,
+        verbose_name="Процент зачисления",
+    )
     rating_qs = models.IntegerField()
     rating_the = models.IntegerField()
+    rating_us_news = models.IntegerField(default=999)
     history_university = models.TextField(verbose_name="История университета")
 
     def __str__(self):

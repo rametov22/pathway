@@ -32,6 +32,9 @@ class UniversitiesListView(views.APIView):
             .order_by("rating_qs", "rating_the")
             .select_related("country")
         )
+        # queryset = Universities.objects.select_related("country").order_by(
+        #     "university_name"
+        # )
 
         if country_id:
             queryset = queryset.filter(country_id=country_id)
@@ -83,7 +86,7 @@ class CountryListView(generics.ListAPIView):
 
         queryset = Country.objects.annotate(
             universities_count=Count("universities")
-        ).order_by("-universities_count")
+        ).order_by("name")
 
         if query:
             queryset = queryset.filter(
@@ -99,8 +102,9 @@ class CountryHomeView(generics.ListAPIView):
     def get_queryset(self):
         queryset = Country.objects.annotate(
             universities_count=Count("universities")
-        ).order_by("-universities_count")[:4]
+        ).order_by("name")[:4]
         return queryset
+        # -universities_count
 
 
 class CountryDetailView(generics.RetrieveAPIView):

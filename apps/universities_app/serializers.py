@@ -34,7 +34,8 @@ class UniversitiesSerializer(serializers.ModelSerializer):
 class UniversitiesDetailSerializer(serializers.ModelSerializer):
     country = serializers.SerializerMethodField()
     city_with_country = serializers.SerializerMethodField()
-    number_of_grants = serializers.SerializerMethodField()
+    international_students_percentage = serializers.SerializerMethodField()
+    acceptance_rate = serializers.SerializerMethodField()
 
     class Meta:
         model = Universities
@@ -46,10 +47,11 @@ class UniversitiesDetailSerializer(serializers.ModelSerializer):
             "city_with_country",
             "year_founded",
             "students_count",
-            "international_students_count",
-            "number_of_grants",
+            "international_students_percentage",
+            "acceptance_rate",
             "rating_qs",
             "rating_the",
+            "rating_us_news",
             "history_university",
         )
 
@@ -59,14 +61,29 @@ class UniversitiesDetailSerializer(serializers.ModelSerializer):
     def get_city_with_country(self, obj):
         return f"{obj.city}, {obj.country.name}"
 
-    def get_number_of_grants(self, obj):
+    def format_percentage(self, value):
+        if value is None:
+            return "Unknown"
+        rounded = round(value, 2)
+        if rounded == int(rounded):
+            return f"{int(rounded)}%"
+        return f"{rounded:.2f}%"
+
+    def get_international_students_percentage(self, obj):
         try:
-            total_students = obj.students_count + obj.international_students_count
-            if total_students > 0:
-                percentage = (20 / 100) * total_students
-                return f"20% - {round(percentage)}"
+            total = obj.students_count
+            international = obj.international_students_count
+            if total > 0:
+                percent = (international / total) * 100
+                return self.format_percentage(percent)
             else:
                 return "0%"
+        except (TypeError, ValueError, ZeroDivisionError):
+            return "Invalid data"
+
+    def get_acceptance_rate(self, obj):
+        try:
+            return self.format_percentage(obj.acceptance_rate)
         except (TypeError, ValueError):
             return "Invalid data"
 
