@@ -24,17 +24,17 @@ class UniversitiesListView(views.APIView):
         country_id = request.data.get("country_id", None)
         search_query = request.query_params.get("search", "").strip()
 
-        queryset = (
-            Universities.objects.annotate(
-                ranking_qs=Coalesce(F("rating_qs"), 9999),
-                ranking_the=Coalesce(F("rating_the"), 9999),
-            )
-            .order_by("rating_qs", "rating_the")
-            .select_related("country")
-        )
-        # queryset = Universities.objects.select_related("country").order_by(
-        #     "university_name"
+        # queryset = (
+        #     Universities.objects.annotate(
+        #         ranking_qs=Coalesce(F("rating_qs"), 9999),
+        #         ranking_the=Coalesce(F("rating_the"), 9999),
+        #     )
+        #     .order_by("rating_qs", "rating_the")
+        #     .select_related("country")
         # )
+        queryset = Universities.objects.select_related("country").order_by(
+            "university_name"
+        )
 
         if country_id:
             queryset = queryset.filter(country_id=country_id)

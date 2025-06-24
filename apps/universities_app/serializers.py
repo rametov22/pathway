@@ -36,6 +36,7 @@ class UniversitiesDetailSerializer(serializers.ModelSerializer):
     city_with_country = serializers.SerializerMethodField()
     international_students_percentage = serializers.SerializerMethodField()
     acceptance_rate = serializers.SerializerMethodField()
+    ratings = serializers.SerializerMethodField()
 
     class Meta:
         model = Universities
@@ -49,9 +50,7 @@ class UniversitiesDetailSerializer(serializers.ModelSerializer):
             "students_count",
             "international_students_percentage",
             "acceptance_rate",
-            "rating_qs",
-            "rating_the",
-            "rating_us_news",
+            "ratings",
             "history_university",
         )
 
@@ -86,6 +85,14 @@ class UniversitiesDetailSerializer(serializers.ModelSerializer):
             return self.format_percentage(obj.acceptance_rate)
         except (TypeError, ValueError):
             return "Invalid data"
+
+    def get_ratings(self, obj):
+        return {
+            "qs": obj.rating_qs,
+            "the": obj.rating_the,
+            "us_news": obj.rating_us_news,
+            "year": 2025,
+        }
 
 
 # COUNTRIES
