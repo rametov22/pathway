@@ -59,9 +59,7 @@ class UniversitiesHomeView(generics.ListAPIView):
         #     .order_by("rating_qs", "rating_the")
         #     .select_related("country")[:4]
         # )
-        queryset = Universities.objects.select_related("country").order_by(
-            "university_name"
-        )
+        queryset = Universities.objects.select_related("country").order_by("?")[:4]
         return queryset
 
 
@@ -134,7 +132,7 @@ class CountryHomeView(generics.ListAPIView):
     def get_queryset(self):
         queryset = Country.objects.annotate(
             universities_count=Count("universities")
-        ).order_by("name")[:4]
+        ).order_by("?")[:4]
         return queryset
         # -universities_count
 

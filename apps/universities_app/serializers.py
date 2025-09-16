@@ -88,9 +88,9 @@ class UniversitiesDetailSerializer(serializers.ModelSerializer):
 
     def get_ratings(self, obj):
         return {
-            "qs": obj.rating_qs,
-            "the": obj.rating_the,
-            "us_news": obj.rating_us_news,
+            "QS": obj.rating_qs,
+            "THE": obj.rating_the,
+            "US_NEWS": obj.rating_us_news,
             "year": 2025,
         }
 
