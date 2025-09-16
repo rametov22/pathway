@@ -118,8 +118,8 @@ class CountryDetailSerializer(serializers.ModelSerializer):
             "id",
             "name",
             "country_img",
-            "about_universities",
             "universities",
+            "about_universities",
             "advantages_universities",
         )
 
