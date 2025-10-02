@@ -86,7 +86,7 @@ class CountryListView(generics.ListAPIView):
         query = self.request.GET.get("search", "").strip()
 
         base_queryset = Country.objects.annotate(
-            universities_count=Count("universities")
+            universities_counts=Count("universities")
         )
 
         with_manual = []
@@ -131,7 +131,7 @@ class CountryHomeView(generics.ListAPIView):
 
     def get_queryset(self):
         queryset = Country.objects.annotate(
-            universities_count=Count("universities")
+            universities_counts=Count("universities")
         ).order_by("?")[:4]
         return queryset
         # -universities_count

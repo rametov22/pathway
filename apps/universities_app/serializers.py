@@ -107,7 +107,7 @@ class UniversitiesDetailSerializer(serializers.ModelSerializer):
 
 # COUNTRIES
 class CountrySerializer(serializers.ModelSerializer):
-    universities_count = serializers.IntegerField()
+    universities_counts = serializers.IntegerField()
 
     class Meta:
         model = Country
@@ -115,7 +115,7 @@ class CountrySerializer(serializers.ModelSerializer):
             "id",
             "country_img",
             "name",
-            "universities_count",
+            "universities_counts",
         )
 
 
