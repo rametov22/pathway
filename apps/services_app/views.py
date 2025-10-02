@@ -8,6 +8,9 @@ from .serializers import (
     ConsultationRequestSerializer,
     ServiceSerializer,
     ServiceDetailSerializer,
+    DayOfWeeksSerializer,
+    ConsultationServicesSerializer,
+    EducationLevelsSerializer,
 )
 
 
@@ -73,3 +76,18 @@ class ConsultationRequestCreateView(generics.CreateAPIView):
         context = super().get_serializer_context()
         context["request"] = self.request
         return context
+
+
+class DayOfWeeksListAPIView(generics.ListAPIView):
+    queryset = DayOfWeeks.objects.all()
+    serializer_class = DayOfWeeksSerializer
+
+
+class ConsultationServicesListAPIView(generics.ListAPIView):
+    queryset = ConsultationServices.objects.all()
+    serializer_class = ConsultationServicesSerializer
+
+
+class EducationLevelsListAPIView(generics.ListAPIView):
+    queryset = EducationLevels.objects.all()
+    serializer_class = EducationLevelsSerializer

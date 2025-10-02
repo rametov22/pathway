@@ -2,7 +2,7 @@ from django.db.models.functions import Coalesce
 from django.conf import settings
 from django.db.models import F
 from rest_framework import serializers
-from .models import Universities, Country
+from .models import Universities, Country, SchoolCategory
 
 
 # UNIVERSITIES
@@ -31,12 +31,20 @@ class UniversitiesSerializer(serializers.ModelSerializer):
         return None
 
 
+class SchoolCategories(serializers.ModelSerializer):
+
+    class Meta:
+        model = SchoolCategory
+        fields = ("name",)
+
+
 class UniversitiesDetailSerializer(serializers.ModelSerializer):
     country = serializers.SerializerMethodField()
     city_with_country = serializers.SerializerMethodField()
     international_students_percentage = serializers.SerializerMethodField()
     acceptance_rate = serializers.SerializerMethodField()
     ratings = serializers.SerializerMethodField()
+    school_categories = SchoolCategories(many=True, read_only=True)
 
     class Meta:
         model = Universities
@@ -44,6 +52,7 @@ class UniversitiesDetailSerializer(serializers.ModelSerializer):
             "university_img",
             "university_name",
             "country",
+            "website_link",
             "year_of_study",
             "city_with_country",
             "year_founded",
@@ -52,6 +61,7 @@ class UniversitiesDetailSerializer(serializers.ModelSerializer):
             "acceptance_rate",
             "ratings",
             "history_university",
+            "school_categories",
         )
 
     def get_country(self, obj):
@@ -88,9 +98,9 @@ class UniversitiesDetailSerializer(serializers.ModelSerializer):
 
     def get_ratings(self, obj):
         return {
+            "US_NEWS": obj.rating_us_news,
             "QS": obj.rating_qs,
             "THE": obj.rating_the,
-            "US_NEWS": obj.rating_us_news,
             "year": 2025,
         }
 
@@ -111,6 +121,8 @@ class CountrySerializer(serializers.ModelSerializer):
 
 class CountryDetailSerializer(serializers.ModelSerializer):
     universities = serializers.SerializerMethodField()
+    gdp = serializers.SerializerMethodField()
+    average_expenses = serializers.SerializerMethodField()
 
     class Meta:
         model = Country
@@ -118,10 +130,29 @@ class CountryDetailSerializer(serializers.ModelSerializer):
             "id",
             "name",
             "country_img",
+            "gdp",
+            "edu_quality_rank",
+            "universities_count",
+            "average_expenses",
+            "universities_top300_count",
             "universities",
             "about_universities",
             "advantages_universities",
         )
+
+    def get_gdp(self, obj):
+        val = obj.gdp
+        if val >= 1_000_000_000_000:
+            return f"{val / 1_000_000_000_000:.2f} trillion"
+        elif val >= 1_000_000_000:
+            return f"{val / 1_000_000_000:.2f} billion"
+        elif val >= 1_000_000:
+            return f"{val / 1_000_000:.2f} million"
+        else:
+            return str(val)
+
+    def get_average_expenses(self, obj):
+        return f"{obj.average_expenses:,.0f}"
 
     def get_universities(self, obj):
         top_universities = obj.universities.annotate(

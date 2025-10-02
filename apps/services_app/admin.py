@@ -43,3 +43,18 @@ class ConsultationAdmin(admin.ModelAdmin):
         "status",
         "created_at",
     )
+
+
+@admin.register(DayOfWeeks)
+class DayOfWeeksAdmin(TabbedTranslationAdmin):
+    pass
+
+
+@admin.register(ConsultationServices)
+class ConsultationServicesAdmin(TabbedTranslationAdmin):
+    pass
+
+
+@admin.register(EducationLevels)
+class EducationLevelsAdmin(TabbedTranslationAdmin):
+    pass

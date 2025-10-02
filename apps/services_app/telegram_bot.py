@@ -103,7 +103,7 @@ async def handle_button_click(update: Update, context: ContextTypes.DEFAULT_TYPE
     elif action == "reject":
         await sync_to_async(lambda: setattr(application, "status", "rejected"))()
         await sync_to_async(application.save)()
-        
+
         await query.edit_message_text(
             text=f"❌ Заявка на **{service_title}** отклонена для пользователя {service_user}!\n\n"
             f"👤 Отклонил: {admin_info}"
@@ -234,7 +234,10 @@ async def send_consultation_notification(consultation):
         f"📞 Телефон: {consultation.phone_number}\n"
         f"📅 Дата рождения: {consultation.date_of_birth.strftime('%Y-%m-%d')}\n"
         f"❓ Вопрос: {consultation.question}\n"
-        f"📅 Дата заявки: {consultation.created_at.strftime('%Y-%m-%d %H:%M')}"
+        f"📅 Дата заявки: {consultation.created_at.strftime('%Y-%m-%d %H:%M')}\n"
+        f"📅 День недели для консультации: {consultation.day_week}\n"
+        f"🚚 Услуга: {consultation.service_of_interest}\n"
+        f"📚 Уровень образования: {consultation.level_education}\n"
     )
 
     keyboard = [
@@ -302,7 +305,10 @@ async def handle_consultation_button(
             f"📞 Телефон: {consultation.phone_number}\n"
             f"📅 Дата рождения: {consultation.date_of_birth.strftime('%Y-%m-%d')}\n"
             f"❓ Вопрос: {consultation.question}\n"
-            f"📅 Дата заявки: {consultation.created_at.strftime('%Y-%m-%d %H:%M')}\n\n"
+            f"📅 Дата заявки: {consultation.created_at.strftime('%Y-%m-%d %H:%M')}\n"
+            f"📅 День недели для консультации: {consultation.day_week}\n"
+            f"🚚 Услуга: {consultation.service_of_interest}\n"
+            f"📚 Уровень образования: {consultation.level_education}\n\n"
             f"✅ Ответит: {admin_info}",
             reply_markup=reply_markup,
         )
@@ -324,6 +330,9 @@ async def handle_consultation_button(
             f"📅 Дата рождения: {consultation.date_of_birth.strftime('%Y-%m-%d')}\n"
             f"❓ Вопрос: {consultation.question}\n"
             f"📅 Дата заявки: {consultation.created_at.strftime('%Y-%m-%d %H:%M')}\n"
+            f"📅 День недели для консультации: {consultation.day_week}\n"
+            f"🚚 Услуга: {consultation.service_of_interest}\n"
+            f"📚 Уровень образования: {consultation.level_education}\n"
             f"📅 Дата ответа: {answered_at}\n\n"
             f"✅ Ответил: {admin_info}"
         )

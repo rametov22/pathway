@@ -2,7 +2,7 @@ from django.contrib import admin
 
 from modeltranslation.admin import TabbedTranslationAdmin
 
-from .models import Directions, Universities, Country
+from .models import Directions, Universities, Country, SchoolCategory
 
 
 @admin.register(Universities)
@@ -11,7 +11,10 @@ class UniversitiesAdmin(TabbedTranslationAdmin):
         "university_name",
         "id",
     )
-    filter_horizontal = ("university_directions",)
+    filter_horizontal = (
+        "university_directions",
+        "school_categories",
+    )
 
 
 @admin.register(Country)
@@ -30,3 +33,8 @@ class DirectionsAdmin(TabbedTranslationAdmin):
         "direction",
         "id",
     )
+
+
+@admin.register(SchoolCategory)
+class SchoolCategoryAdmin(TabbedTranslationAdmin):
+    pass

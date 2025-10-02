@@ -9,6 +9,7 @@ class Universities(models.Model):
     university_name = models.CharField(
         max_length=256, verbose_name="Название университета"
     )
+    website_link = models.URLField(null=True, blank=True)
     is_state = models.BooleanField(
         default=True, verbose_name="Государственный университет"
     )
@@ -46,9 +47,17 @@ class Universities(models.Model):
     rating_the = models.IntegerField()
     rating_us_news = models.IntegerField(default=999)
     history_university = models.TextField(verbose_name="История университета")
+    school_categories = models.ManyToManyField("SchoolCategory", blank=True)
 
     def __str__(self):
         return f"{self.university_name}"
+
+
+class SchoolCategory(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+
+    def __str__(self):
+        return self.name
 
 
 class Country(models.Model):
@@ -60,6 +69,12 @@ class Country(models.Model):
     manual_order = models.PositiveIntegerField(
         default=0, verbose_name="Позиция в списке"
     )
+
+    gdp = models.BigIntegerField()
+    edu_quality_rank = models.IntegerField()
+    universities_count = models.IntegerField()
+    average_expenses = models.IntegerField()
+    universities_top300_count = models.IntegerField()
 
     def __str__(self):
         return self.name

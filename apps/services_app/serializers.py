@@ -76,10 +76,28 @@ class ConsultationRequestSerializer(serializers.ModelSerializer):
     name = serializers.CharField(required=False, allow_blank=True, max_length=256)
     country = serializers.CharField(required=False, allow_blank=True, max_length=10)
     question = serializers.CharField(required=True, max_length=512)
+    day_week = serializers.PrimaryKeyRelatedField(
+        queryset=DayOfWeeks.objects.all(), required=True
+    )
+    service_of_interest = serializers.PrimaryKeyRelatedField(
+        queryset=ConsultationServices.objects.all(), required=True
+    )
+    level_education = serializers.PrimaryKeyRelatedField(
+        queryset=EducationLevels.objects.all(), required=True
+    )
 
     class Meta:
         model = ConsultationRequest
-        fields = ["country_code", "phone_number", "name", "country", "question"]
+        fields = [
+            "country_code",
+            "phone_number",
+            "name",
+            "day_week",
+            "service_of_interest",
+            "level_education",
+            "country",
+            "question",
+        ]
 
     def validate(self, data):
         user = self.context["request"].user
@@ -165,3 +183,21 @@ class ConsultationRequestSerializer(serializers.ModelSerializer):
             "country": self.context["request"].data.get("country", ""),
             "question": validated_data["question"],
         }
+
+
+class DayOfWeeksSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DayOfWeeks
+        fields = ["id", "week"]
+
+
+class ConsultationServicesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ConsultationServices
+        fields = ["id", "service"]
+
+
+class EducationLevelsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = EducationLevels
+        fields = ["id", "level"]

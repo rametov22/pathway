@@ -36,7 +36,7 @@ phonenumbers==8.13.55
 phonenumberslite==8.13.55
 pillow==11.1.0
 prompt_toolkit==3.0.50
-psycopg2==2.9.10
+psycopg2-binary==2.9.10
 pyasn1==0.6.1
 pyasn1_modules==0.4.1
 pycparser==2.22

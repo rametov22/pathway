@@ -51,6 +51,17 @@ class ConsultationRequest(models.Model):
     full_name = models.CharField(max_length=256)
     phone_number = models.CharField(max_length=20)
     date_of_birth = models.DateField(null=True, blank=True)
+
+    day_week = models.ForeignKey(
+        "DayOfWeeks", on_delete=models.CASCADE, related_name="consultations"
+    )
+    service_of_interest = models.ForeignKey(
+        "ConsultationServices", on_delete=models.CASCADE, related_name="consultations"
+    )
+    level_education = models.ForeignKey(
+        "EducationLevels", on_delete=models.CASCADE, related_name="consultations"
+    )
+
     question = models.TextField()
     status = models.CharField(
         max_length=20, choices=STATUS_CHOICES, default="not_answered"
@@ -60,3 +71,24 @@ class ConsultationRequest(models.Model):
 
     def __str__(self):
         return self.full_name
+
+
+class DayOfWeeks(models.Model):
+    week = models.CharField(max_length=155)
+
+    def __str__(self):
+        return self.week
+
+
+class ConsultationServices(models.Model):
+    service = models.CharField(max_length=155)
+
+    def __str__(self):
+        return self.service
+
+
+class EducationLevels(models.Model):
+    level = models.CharField(max_length=155)
+
+    def __str__(self):
+        return self.level

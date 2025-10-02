@@ -1,5 +1,5 @@
 from modeltranslation.translator import register, TranslationOptions
-from .models import Directions, Universities, Country
+from .models import Directions, Universities, Country, SchoolCategory
 
 
 @register(Universities)
@@ -22,3 +22,8 @@ class CountryTranslationOptions(TranslationOptions):
 @register(Directions)
 class DirectionTranslationOptions(TranslationOptions):
     fields = ("direction",)
+
+
+@register(SchoolCategory)
+class SchoolCategoryTranslationOptions(TranslationOptions):
+    fields = ("name",)
