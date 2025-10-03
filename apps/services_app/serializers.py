@@ -198,7 +198,7 @@ class ConsultationServicesSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ConsultationServices
-        fields = ["id", "service"]
+        fields = ["id", "name"]
 
 
 class EducationLevelsSerializer(serializers.ModelSerializer):
@@ -206,4 +206,4 @@ class EducationLevelsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = EducationLevels
-        fields = ["id", "level"]
+        fields = ["id", "name"]
