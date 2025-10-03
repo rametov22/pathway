@@ -186,18 +186,24 @@ class ConsultationRequestSerializer(serializers.ModelSerializer):
 
 
 class DayOfWeeksSerializer(serializers.ModelSerializer):
+    name = serializers.CharField(source="week")
+
     class Meta:
         model = DayOfWeeks
-        fields = ["id", "week"]
+        fields = ["id", "name"]
 
 
 class ConsultationServicesSerializer(serializers.ModelSerializer):
+    name = serializers.CharField(source="service")
+
     class Meta:
         model = ConsultationServices
         fields = ["id", "service"]
 
 
 class EducationLevelsSerializer(serializers.ModelSerializer):
+    name = serializers.CharField(source="level")
+
     class Meta:
         model = EducationLevels
         fields = ["id", "level"]
