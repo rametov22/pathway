@@ -60,7 +60,7 @@ class UniversitiesDetailSerializer(serializers.ModelSerializer):
             "international_students_percentage",
             "acceptance_rate",
             "ratings",
-            "history_university",
+            # "history_university",
             "school_categories",
         )
 
