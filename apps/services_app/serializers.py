@@ -176,7 +176,7 @@ class ConsultationRequestSerializer(serializers.ModelSerializer):
         if "question" not in validated_data:
             validated_data["question"] = ""
 
-        consultation_request = super().create(validated_data)
+        return super().create(validated_data)
 
         return {
             "phone_number": validated_data["phone_number"],
