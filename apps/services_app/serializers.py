@@ -77,13 +77,43 @@ class ConsultationRequestSerializer(serializers.ModelSerializer):
     country = serializers.CharField(required=False, allow_blank=True, max_length=10)
     question = serializers.CharField(required=True, max_length=512)
     day_week = serializers.PrimaryKeyRelatedField(
-        queryset=DayOfWeeks.objects.all(), required=True
+        queryset=DayOfWeeks.objects.all(),
+        required=True,
+        allow_null=False,
+        pk_field=serializers.IntegerField(),
+        error_messages={
+            "required": _("Это поле обязательно."),
+            "null": _("Это поле обязательно."),
+            "does_not_exist": _("Выбранный день недели не существует."),
+            "incorrect_type": _("Неверный тип. Ожидалось целое число."),
+            "invalid": _("Неверный ввод."),
+        },
     )
     service_of_interest = serializers.PrimaryKeyRelatedField(
-        queryset=ConsultationServices.objects.all(), required=True
+        queryset=ConsultationServices.objects.all(),
+        required=True,
+        allow_null=False,
+        pk_field=serializers.IntegerField(),
+        error_messages={
+            "required": _("Это поле обязательно."),
+            "null": _("Это поле обязательно."),
+            "does_not_exist": _("Выбранная услуга не существует."),
+            "incorrect_type": _("Неверный тип. Ожидалось целое число."),
+            "invalid": _("Неверный ввод."),
+        },
     )
     level_education = serializers.PrimaryKeyRelatedField(
-        queryset=EducationLevels.objects.all(), required=True
+        queryset=EducationLevels.objects.all(),
+        required=True,
+        allow_null=False,
+        pk_field=serializers.IntegerField(),
+        error_messages={
+            "required": _("Это поле обязательно."),
+            "null": _("Это поле обязательно."),
+            "does_not_exist": _("Выбранный уровень образования не существует."),
+            "incorrect_type": _("Неверный тип. Ожидалось целое число."),
+            "invalid": _("Неверный ввод."),
+        },
     )
 
     class Meta:
@@ -177,12 +207,6 @@ class ConsultationRequestSerializer(serializers.ModelSerializer):
             validated_data["question"] = ""
 
         return super().create(validated_data)
-
-        return {
-            "phone_number": validated_data["phone_number"],
-            "country": self.context["request"].data.get("country", ""),
-            "question": validated_data["question"],
-        }
 
 
 class DayOfWeeksSerializer(serializers.ModelSerializer):
