@@ -175,7 +175,7 @@ class GoogleLoginApiView(views.APIView):
             return Response({"error": "Invalid platform specified"}, status=400)
 
         try:
-            idinfo = id_token.verify_oauth2_token(token, requests.Request(), client_id)
+            idinfo = id_token.verify_oauth2_token(token, requests.Request())
 
             if "email" not in idinfo:
                 return Response({"error": "Invalid token"}, status=400)
