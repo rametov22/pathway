@@ -159,14 +159,8 @@ class DeleteAccountView(generics.DestroyAPIView):
         )
 
 
-import logging
-
-logger = logging.getLogger(__name__)
-
-
 class GoogleLoginApiView(views.APIView):
     def post(self, request):
-        logger.debug("Incoming data: %s", request.data)
         token = request.data.get("token")
         # platform = request.data.get("platform")
 
@@ -184,7 +178,6 @@ class GoogleLoginApiView(views.APIView):
             idinfo = id_token.verify_oauth2_token(
                 token, requests.Request(), settings.GOOGLE_WEB_CLIENT_ID
             )
-            logger.debug("Google idinfo: %s", idinfo)
 
             if "email" not in idinfo:
                 return Response({"error": "Invalid token"}, status=400)
