@@ -239,25 +239,25 @@ LOGGING = {
         },
     },
     "handlers": {
-        "console": {
-            "class": "logging.StreamHandler",
-            "formatter": "verbose",
-        },
-        # "file": {
-        #     "level": "DEBUG",
-        #     "class": "logging.FileHandler",
+        # "console": {
+        #     "class": "logging.StreamHandler",
         #     "formatter": "verbose",
-        #     "filename": os.path.join(base_dir_log, "django_debug.log"),
         # },
+        "file": {
+            "level": "DEBUG",
+            "class": "logging.FileHandler",
+            "formatter": "verbose",
+            "filename": os.path.join(base_dir_log, "django_debug.log"),
+        },
     },
     "loggers": {
         "django": {
-            "handlers": ["console"],
+            "handlers": ["file"],
             "level": "DEBUG",
             "propagate": True,
         },
         "accounts_app": {  # имя твоего приложения
-            "handlers": ["console"],
+            "handlers": ["file"],
             "level": "DEBUG",
             "propagate": False,
         },
