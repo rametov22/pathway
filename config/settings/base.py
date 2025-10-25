@@ -239,12 +239,16 @@ LOGGING = {
         },
     },
     "handlers": {
-        "file": {
-            "level": "DEBUG",
-            "class": "logging.FileHandler",
+        "console": {
+            "class": "logging.StreamHandler",
             "formatter": "verbose",
-            "filename": os.path.join(base_dir_log, "django_debug.log"),
         },
+        # "file": {
+        #     "level": "DEBUG",
+        #     "class": "logging.FileHandler",
+        #     "formatter": "verbose",
+        #     "filename": os.path.join(base_dir_log, "django_debug.log"),
+        # },
     },
     "loggers": {
         "django": {
