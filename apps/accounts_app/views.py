@@ -155,7 +155,7 @@ class DeleteAccountView(generics.DestroyAPIView):
         user = self.get_object()
         user.delete()
         return Response(
-            {"message", _("Аккаунт успещно удалён")}, status=status.HTTP_204_NO_CONTENT
+            {"message": _("Аккаунт успещно удалён")}, status=status.HTTP_204_NO_CONTENT
         )
 
 
