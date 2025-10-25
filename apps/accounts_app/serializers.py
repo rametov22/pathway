@@ -56,7 +56,7 @@ class RegisterStep1Serializer(serializers.ModelSerializer):
 
         if existing_user and existing_user.is_active:
             raise serializers.ValidationError(
-                {"email": _("Пользователь с такой электронной почтой не найден.")}
+                {"email": _("Пользователь с такой электронной почтой уже есть.")}
             )
         return data
 
