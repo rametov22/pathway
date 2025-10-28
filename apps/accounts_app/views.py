@@ -168,7 +168,15 @@ class GoogleLoginApiView(views.APIView):
 
         # settings.GOOGLE_WEB_CLIENT_ID
         try:
-            idinfo = id_token.verify_oauth2_token(token, requests.Request())
+            idinfo = id_token.verify_oauth2_token(
+                token,
+                requests.Request(),
+                [
+                    settings.GOOGLE_WEB_CLIENT_ID,
+                    settings.GOOGLE_IOS_CLIENT_ID,
+                    settings.GOOGLE_ANDROID_CLIENT_ID,
+                ],
+            )
 
             if "email" not in idinfo:
                 return Response({"error": "Invalid token"}, status=400)
