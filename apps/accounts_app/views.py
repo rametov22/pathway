@@ -166,10 +166,9 @@ class GoogleLoginApiView(views.APIView):
         if not token:
             return Response({"error": "Token is required"}, status=400)
 
+        # settings.GOOGLE_WEB_CLIENT_ID
         try:
-            idinfo = id_token.verify_oauth2_token(
-                token, requests.Request(), settings.GOOGLE_WEB_CLIENT_ID
-            )
+            idinfo = id_token.verify_oauth2_token(token, requests.Request())
 
             if "email" not in idinfo:
                 return Response({"error": "Invalid token"}, status=400)
